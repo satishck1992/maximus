@@ -11,9 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "browser-sync": "^2.14.0",
+    "es6-promise": "^3.2.1",
     "gulp": "^3.9.1",
     "gulp-sass": "^2.3.2",
     "materialize-css": "^0.97.7",
-    "run-sequence": "^1.2.2"
+    "run-sequence": "^1.2.2",
+    "strophe": "^1.2.4"
   }
 }
