@@ -1,0 +1,55 @@
+main#index {
+  height: 100%;
+  padding-bottom: 150px;
+  display: flex;
+  align-items: center;
+  .container {
+    text-align: center;
+    #logo {
+      display: block;
+      margin-bottom: 36px;
+      img {
+        height: 120px;
+      }
+    }
+    .welcome-msg {
+      color: #666;
+      font-size: 1.5rem;
+      line-height: 36px;
+    }
+    .login-card {
+      margin: 24px auto;
+      max-width: 600px;
+      .card-action {
+        text-align: right;
+      }
+      form {
+        i.active {
+          color: $brand-color;
+        }
+        label {
+          text-align: left;
+        }
+        input[type=text]:focus:not([readonly]) + label,
+        input[type=password]:focus:not([readonly]) + label {
+          color: $brand-color;
+        }
+        input[type=text]:focus:not([readonly]),
+        input[type=password]:focus:not([readonly]) {
+          box-shadow: 0 1px 0 0 $brand-color;
+          border-bottom: 1px solid $brand-color;
+        }
+        span.result {
+          font-size: 0.9rem;
+          font-weight: bold;
+          &.error {
+            color: #F05D5E;
+          }
+        }
+        .btn {
+          background-color: $brand-color;
+        }
+      }
+    }
+  }
+}
