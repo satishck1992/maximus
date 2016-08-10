@@ -5,6 +5,16 @@ body {
   overflow: hidden;
   background: #f5f5f5; }
 
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08); }
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); }
+
+*::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important; }
+
 main#index {
   height: 100%;
   padding-bottom: 150px;
@@ -44,3 +54,88 @@ main#index {
           color: #F05D5E; }
       main#index .container .login-card form .btn {
         background-color: #004d99; }
+
+main#chat {
+  height: 100%;
+  display: flex; }
+  @media only screen and (min-width: 993px) {
+    main#chat {
+      padding-left: 300px; } }
+  main#chat .groups-list-wrapper {
+    flex: 0 0 430px;
+    position: relative; }
+    main#chat .groups-list-wrapper .box {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      background-color: #fff;
+      width: 400px;
+      z-index: 100;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+    main#chat .groups-list-wrapper .groups-list-box {
+      position: absolute;
+      top: 80px;
+      bottom: 0;
+      left: 15px;
+      display: flex;
+      flex-direction: column; }
+      main#chat .groups-list-wrapper .groups-list-box .search {
+        position: relative;
+        flex: 0 0 60px;
+        background-color: #fbfbfb;
+        border-bottom: 1px solid #f5f5f5;
+        display: flex;
+        align-items: center; }
+        main#chat .groups-list-wrapper .groups-list-box .search input[type="search"] {
+          margin: 0 auto;
+          height: 40px;
+          width: 90%;
+          background: #fff;
+          border: 1px solid #f6f6f6;
+          border-radius: 6px;
+          padding-right: 50px;
+          padding-left: 10px;
+          box-sizing: border-box; }
+          main#chat .groups-list-wrapper .groups-list-box .search input[type="search"]:focus:not([readonly]) {
+            border: 1px solid #e0e0e0;
+            box-shadow: none; }
+        main#chat .groups-list-wrapper .groups-list-box .search i {
+          position: absolute;
+          top: 18px;
+          right: 30px;
+          color: #b3b3b3; }
+      main#chat .groups-list-wrapper .groups-list-box ul.groups-list {
+        margin: 0;
+        flex: 1;
+        overflow-y: auto; }
+        main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group {
+          position: relative;
+          display: flex;
+          align-items: center;
+          border-top: 1px solid #f2f2f2;
+          padding-top: 12px;
+          padding-bottom: 12px; }
+          main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .avatar {
+            padding: 0 15px; }
+            main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .avatar img {
+              width: 49px;
+              height: 49px; }
+          main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column; }
+            main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .title {
+              font-weight: bold; }
+            main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .meta {
+              font-weight: 0.8rem;
+              margin-top: 3px;
+              color: rgba(0, 0, 0, 0.6); }
+              main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .meta .users-count {
+                margin-left: 12px; }
+          main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .action {
+            padding-right: 15px;
+            flex: 0 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; }
+            main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .action .group_join--btn {
+              margin-top: 6px; }
