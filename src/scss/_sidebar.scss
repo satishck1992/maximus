@@ -8,14 +8,19 @@
             margin-right: 12px;
          }
       }
-      &:hover,
-      &.active {
-         a {
-            color: $brand-color;
-         }
+      &:hover {
+         a,
          i {
             color: $brand-color;
          }
+      }
+      &.active {
+         background-color: $lighter-brand-color;
+         a,
+         i {
+            color: #fff;
+         }
+
       }
    }
    li.logo {

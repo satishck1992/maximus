@@ -35,7 +35,7 @@ $('document').ready(function () {
             html += '<div class="avatar"><img src="' + room.image + '" class="circle" /></div>'
             html += '<div class="detail">';
             html += '<div class="title">' + room.name + '</div>';
-            html += '<div class="meta"><span class="room-number">Room Number : ' + room.srno + '</span><span class="users-count">Users Count : ' + room.user_count + '</span></div>';
+            html += '<div class="meta"><span class="room-number"><i class="material-icons">pets</i> : ' + room.srno + '</span><span class="users-count"><i class="material-icons">face</i> ' + room.user_count + '</span></div>';
             html += '</div>';
             html += '<div class="action"><a href="#" class="group_peek--btn"><i class="material-icons">hearing</i></a><a href="#" class="group_join--btn"><i class="material-icons">chat</i></a></div>';
             html += '</li>';
@@ -50,11 +50,12 @@ $('document').ready(function () {
             var room_title = getRoomTitle(this);
             // self.openPeekWindow(self.conn, room_node, room_title);
          });
-         $('ul.groups-list .group_join--btn').click(function (e) {
+         $('ul.groups-list .group_join--btn:not').click(function (e) {
             e.preventDefault();
             var room_node = getRoomNode(this);
             var room_title = getRoomTitle(this);
-            openChatWindow(self.conn, room_node, room_title);
+
+            openChatWindow(self.conn, room_node, room_title, CONFIG.user.jid);
          });
          function getRoomNode(el) {
             return $(el).closest('li.group').data('group-id');
@@ -64,7 +65,8 @@ $('document').ready(function () {
          }
       },
       showErrorMsg: function (err0r_msg) {
-         Materialize.toast(err0r_msg);
+         var html= '<li class="error">'+err0r_msg+'</li>';
+         $('ul.groups-list').html(html);
       }
    }
    CHAT_CONTROL.init();
@@ -123,7 +125,7 @@ function getRoomsList() {
          },
          {
             srno: 1,
-            id: 'princely_musings_2',
+            id: 'test_ultra_group_2',
             name: 'Road to the final showdown: France',
             image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/06/france.jpg',
             user_count: 5
@@ -143,30 +145,32 @@ function getRoomsList() {
 /**
  * 
  */
-function openChatWindow(conn, room_node, room_title) {
+function openChatWindow(conn, room_node, room_title, user_jid) {
 
    var CHAT_BOX = {
       conn: conn,
       room_node: room_node,
       room_title: room_title,
+      user_jid: user_jid,
       user_name: '',
       domEl: { 'closeButton': '', 'messageList': '', 'textInput': '' },
       init: function () {
          var self = this;
+         this.user_name = 'lalu';
          this.showChatWindow();
-         this.user_name = prompt('what user name do you want to have?');
+         this.bindChatEvents();
          this.connectToGroup()
             .then(function (success) {
-               self.bindChatEvents();
+               self.domEl.messageList.find('li.connecting').remove();
             }, function (error) {
-               console.log('Could not connect to the Group..');
+               self.domEl.messageList.find('li.connecting').addClass('error').html('Could not connect to the Group.');
             });
       },
       showChatWindow: function () {
          var html = '';
          html += '<div class="box chat-window" data-group-id="' + this.room_node + '">';
          html += '<div class="header"><i class="material-icons">chat</i><div class="title">' + this.room_title + '</div><a href="#" class="close-chat"><i class="material-icons">clear</i></a></div>';
-         html += '<ul class="chat-messages"><li>Connecting to group.. Please wait..</li></ul>';
+         html += '<ul class="chat-messages"><li class="connecting">Connecting to group.. Please wait..</li></ul>';
          html += '<div class="send-message"><i class="material-icons emotions-icon">insert_emoticon</i><input type="text" placeholder="Start Chatting"><i class="material-icons attach-icon">wb_cloudy</i></div>';
          html += '</div>';
          $('.chat-windows-wrapper').append(html);
@@ -181,6 +185,12 @@ function openChatWindow(conn, room_node, room_title) {
          });
       },
       onMessageEvent: function (message) {
+         // library error work-a-round, else message repeats in multiple group.
+         var _event__node= $(message).children('event').children('items').attr('node');
+         if(_event__node !== CHAT_BOX.room_node) {
+            return ;
+         }
+
          var _data = $(message).children('event')
             .children('items')
             .children('item').text();
@@ -212,6 +222,9 @@ function openChatWindow(conn, room_node, room_title) {
                self.sendMessage();
             }
          });
+         $(this.domEl.closeButton).click(function (e) {
+            self.removeConnection();
+         });
       },
       sendMessage: function () {
          var textMessage = $(this.domEl.textInput).val();
@@ -230,28 +243,6 @@ function openChatWindow(conn, room_node, room_title) {
             $(this.domEl.textInput).val('');
          }
       },
-   }
-   CHAT_BOX.init();
-}
-
-
-
-/**
- * This function manages Joining, handling events and deleting Group to chat.
- * params
- * 1. conn -> Strophe Connection
- * 2. room_node -> Room to connect to
- * 3. room_name -> Title of the Room
- */
-function joinGroup(conn, room_node, room_name, user_name) {
-
-   var Messenger = {
-
-      bindEvents: function () {
-         $(this.domEl.closeButton).click(function (e) {
-            self.removeConnection();
-         });
-      },
       removeConnection: function () {
          this.unbindEvents();
          this.closeConnection();
@@ -262,12 +253,11 @@ function joinGroup(conn, room_node, room_name, user_name) {
          $(this.domEl.closeButton).unbind();
       },
       closeConnection: function () {
-         this.conn.pubsub.unsubscribe(this.room_node, this.user_name);
+         this.conn.pubsub.unsubscribe(this.room_node, Strophe.getBareJidFromJid(this.user_jid));
       },
       removeDomElement: function () {
          $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"]').remove();
       }
    }
-
-   Messenger.init();
+   CHAT_BOX.init();
 }

@@ -74,10 +74,14 @@ main#index {
     font-family: 'Merriweather Sans', sans-serif; }
     .side-nav.fixed li a i {
       margin-right: 12px; }
-  .side-nav.fixed li:hover a, .side-nav.fixed li.active a {
+  .side-nav.fixed li:hover a,
+  .side-nav.fixed li:hover i {
     color: #004d99; }
-  .side-nav.fixed li:hover i, .side-nav.fixed li.active i {
-    color: #004d99; }
+  .side-nav.fixed li.active {
+    background-color: #3E78B2; }
+    .side-nav.fixed li.active a,
+    .side-nav.fixed li.active i {
+      color: #fff; }
   .side-nav.fixed li.logo {
     line-height: 100px; }
     .side-nav.fixed li.logo a {
@@ -114,8 +118,8 @@ main#chat {
       main#chat .groups-list-wrapper .groups-list-box .search {
         position: relative;
         flex: 0 0 60px;
-        background-color: #fbfbfb;
-        border-bottom: 1px solid #f5f5f5;
+        background-color: #3E78B2;
+        border-radius: 4px 4px 0 0;
         display: flex;
         align-items: center; }
         main#chat .groups-list-wrapper .groups-list-box .search input[type="search"] {
@@ -140,13 +144,26 @@ main#chat {
         margin: 0;
         flex: 1;
         overflow-y: auto; }
+        main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.loading,
+        main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.error {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: 'Inconsolata';
+          font-weight: bold;
+          font-size: 1.4rem; }
+        main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.error {
+          color: #d6402d; }
         main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group {
           position: relative;
           display: flex;
           align-items: center;
           border-top: 1px solid #f2f2f2;
           padding-top: 12px;
-          padding-bottom: 12px; }
+          padding-bottom: 12px;
+          min-height: 100px; }
           main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .avatar {
             padding: 0 15px; }
             main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .avatar img {
@@ -157,19 +174,25 @@ main#chat {
             display: flex;
             flex-direction: column; }
             main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .title {
-              font-weight: bold; }
+              font-weight: bold;
+              color: #004d99;
+              margin-bottom: 9px; }
             main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .meta {
-              font-weight: 0.8rem;
-              margin-top: 3px;
-              color: rgba(0, 0, 0, 0.6); }
+              font-size: 0.9rem;
+              color: #005A04;
+              font-weight: bold; }
+              main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .meta i {
+                font-size: 1.2rem; }
               main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .detail .meta .users-count {
-                margin-left: 12px; }
+                margin-left: 36px; }
           main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .action {
-            padding-right: 15px;
-            flex: 0 0 40px;
+            flex: 0 0 60px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center; }
+            main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .action i {
+              color: #d6402d; }
             main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .action .group_join--btn {
               margin-top: 6px; }
   main#chat .chat-windows-wrapper {
@@ -209,6 +232,17 @@ main#chat {
         overflow-y: auto;
         display: flex;
         flex-direction: column; }
+        main#chat .chat-windows-wrapper .chat-window ul.chat-messages li.connecting {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-family: 'Inconsolata';
+          font-weight: bold;
+          font-size: 1.4rem; }
+        main#chat .chat-windows-wrapper .chat-window ul.chat-messages li.error {
+          color: #d6402d; }
         main#chat .chat-windows-wrapper .chat-window ul.chat-messages li.chat-message {
           position: relative;
           margin-top: 6px;
