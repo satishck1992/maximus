@@ -199,7 +199,7 @@ function openChatWindow(conn, room_node, room_title) {
          }
          html += message_obj.message_text_data;
          html += '</li>';
-         $(this.domEl.messageList).html('').append(html);
+         $(this.domEl.messageList).append(html);
          this.domEl.messageList.find('li:last-child').velocity("scroll", {
             container: this.domEl.messageList,
             duration: 100

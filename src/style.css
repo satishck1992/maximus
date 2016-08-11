@@ -5,6 +5,18 @@ body {
   overflow: hidden;
   background: #f5f5f5; }
 
+body {
+  font-family: 'Merriweather Sans', sans-serif; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title {
+  font-family: 'Inconsolata'; }
+
 *::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.08); }
 
@@ -54,6 +66,27 @@ main#index {
           color: #F05D5E; }
       main#index .container .login-card form .btn {
         background-color: #004d99; }
+
+.side-nav.fixed {
+  width: 240px; }
+  .side-nav.fixed li a {
+    color: #6a6c6f;
+    font-family: 'Merriweather Sans', sans-serif; }
+    .side-nav.fixed li a i {
+      margin-right: 12px; }
+  .side-nav.fixed li:hover a, .side-nav.fixed li.active a {
+    color: #004d99; }
+  .side-nav.fixed li:hover i, .side-nav.fixed li.active i {
+    color: #004d99; }
+  .side-nav.fixed li.logo {
+    line-height: 100px; }
+    .side-nav.fixed li.logo a {
+      height: 100px;
+      line-height: 100px;
+      font-size: 1.8rem;
+      color: #004d99;
+      font-family: 'Inconsolata';
+      text-align: center; }
 
 main#chat {
   height: 100%;
