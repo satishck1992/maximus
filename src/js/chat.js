@@ -1,42 +1,95 @@
 $('document').ready(function () {
 
    var CONFIG = {
-      'service': {
-         'url': 'ws://54.169.217.88:5280/websocket',
-         'protocol': 'wss'
-      },
-      'user': {
-         'jid': 'b@mm.io',
-         'password': 'password'
-      },
-      'room': {
-         'node': 'princely_musings'
-      }
+      'service': { 'url': 'ws://54.169.217.88:5280/websocket', 'protocol': 'wss' },
+      'user': { 'jid': 'b@mm.io', 'password': 'password' },
+      'room': { 'node': 'princely_musings' }
    }
 
-   var conn;
-
-   connectXMPPServer(CONFIG.service.url, CONFIG.service.protocol, CONFIG.user.jid, CONFIG.user.password)
-      .then(function (connection) {
-         conn = connection;
-      }, function (error) {
-         console.log('Could not connect to XMPP Server. Please try later..');
-      });
-
-   $('.group_join--btn').click(function (e) {
-      var groupId = $(this).closest('li.group').data('group-id');
-      var groupTitle = $(this).closest('li.group').find('.detail .title').html();
-      joinGroup(conn, groupId, groupTitle, 'Lallan');
-   });
+   var CHAT_CONTROL = {
+      conn: '',
+      rooms_list: [],
+      init: function () {
+         var self = this;
+         isUserAuthorized()
+            .then(function (success) {
+               return connectXMPPServer(CONFIG.service.url, CONFIG.service.protocol, CONFIG.user.jid, CONFIG.user.password);
+            })
+            .then(function (connection) {
+               self.conn = connection;
+               return getRoomsList();
+            })
+            .then(function (rooms_list) {
+               self.rooms_list = rooms_list;
+               self.buildGroupsHtml();
+               self.bindRoomEvents();
+            })
+            .catch(function (error) {
+               self.showErrorMsg(error);
+            });
+      },
+      buildGroupsHtml: function () {
+         var html = '';
+         $.each(this.rooms_list, function (i, room) {
+            html += '<li class="group" data-group-id="' + room.id + '">';
+            html += '<div class="avatar"><img src="' + room.image + '" class="circle" /></div>'
+            html += '<div class="detail">';
+            html += '<div class="title">' + room.name + '</div>';
+            html += '<div class="meta"><span class="room-number">Room Number : ' + room.srno + '</span><span class="users-count">Users Count : ' + room.user_count + '</span></div>';
+            html += '</div>';
+            html += '<div class="action"><a href="#" class="group_peek--btn"><i class="material-icons">hearing</i></a><a href="#" class="group_join--btn"><i class="material-icons">chat</i></a></div>';
+            html += '</li>';
+         });
+         $('ul.groups-list').html(html);
+      },
+      bindRoomEvents: function () {
+         var self = this;
+         $('ul.groups-list .group_peek--btn').click(function (e) {
+            e.preventDefault();
+            var room_node = getRoomNode(this);
+            var room_title = getRoomTitle(this);
+            // self.openPeekWindow(self.conn, room_node, room_title);
+         });
+         $('ul.groups-list .group_join--btn').click(function (e) {
+            e.preventDefault();
+            var room_node = getRoomNode(this);
+            var room_title = getRoomTitle(this);
+            openChatWindow(self.conn, room_node, room_title);
+         });
+         function getRoomNode(el) {
+            return $(el).closest('li.group').data('group-id');
+         }
+         function getRoomTitle(el) {
+            return $(el).closest('li.group').find('.detail .title').html()
+         }
+      },
+      showErrorMsg: function (err0r_msg) {
+         Materialize.toast(err0r_msg);
+      }
+   }
+   CHAT_CONTROL.init();
 });
 
 /**
- * Connect To XMPP host via Strophe and promises.
+ * Check if the user is authorized to view the page.
+ * @return {boolean} isAuthorized or not.
+ */
+function isUserAuthorized() {
+   // can check for some value in cookies or through server API call
+   return new Promise(function (fulfill, reject) {
+      fulfill(true);
+   });
+}
+
+
+/**
+ * Connect XMPP host via Strophe and promises.
  * params
  * 1. host -> XMPP service path.
  * 2. protocol -> protocol for the Service
  * 3. user_jid -> User JID for XMPP Server
  * 4. user_password -> User Password for XMPP Server
+ * @fulfills conn {object} Established XMPP Connection 
  */
 function connectXMPPServer(host, protocol, user_jid, user_password) {
    return new Promise(function (fulfill, reject) {
@@ -45,51 +98,75 @@ function connectXMPPServer(host, protocol, user_jid, user_password) {
          if (response === Strophe.Status.CONNECTED) {
             fulfill(conn);
          } else if (response === Strophe.Status.DISCONNECTED) {
-            reject();
+            reject('Cannot connect to XMPP server.');
+         } else if (response === Strophe.Status.AUTHFAIL) {
+            reject('XMPP User Authentication Failed.')
          }
       });
    });
 }
 
 /**
- * This function manages Joining, handling events and deleting Group to chat.
- * params
- * 1. conn -> Strophe Connection
- * 2. room_node -> Room to connect to
- * 3. room_name -> Title of the Room
+ * Gets array of Rooms.
+ * @return {array} List of Rooms.
  */
-function joinGroup(conn, room_node, room_name, user_name) {
+function getRoomsList() {
+   // ajax call to get rooms list.
+   return new Promise(function (fulfill, reject) {
+      fulfill([
+         {
+            srno: 1,
+            id: 'princely_musings',
+            name: 'The Troubled vs The Consistently Consistent: Pakistan vs England',
+            image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/07/england-vs-pakistan-schedule-2016-ireland-vs-pakistan-schedule-2016-770x462.jpg',
+            user_count: 7,
+         },
+         {
+            srno: 1,
+            id: 'princely_musings_2',
+            name: 'Road to the final showdown: France',
+            image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/06/france.jpg',
+            user_count: 5
+         },
+         {
+            srno: 1,
+            id: 'princely_musings_3',
+            name: 'Euros 2016 Germany vs France : World Champions face the hosts',
+            image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/07/germany-vs-france.jpg',
+            user_count: 4
+         }
+      ]);
+   });
+}
 
-   var Messenger = {
+
+/**
+ * 
+ */
+function openChatWindow(conn, room_node, room_title) {
+
+   var CHAT_BOX = {
       conn: conn,
       room_node: room_node,
-      room_name: room_name,
-      user_name: user_name,
-      domEl: {
-         'closeButton': '',
-         'messageList': '',
-         'textInput': ''
-      },
+      room_title: room_title,
+      user_name: '',
+      domEl: { 'closeButton': '', 'messageList': '', 'textInput': '' },
       init: function () {
          var self = this;
-
-         this.addChatWindow();
+         this.showChatWindow();
+         this.user_name = prompt('what user name do you want to have?');
          this.connectToGroup()
             .then(function (success) {
-               self.bindEvents();
+               self.bindChatEvents();
             }, function (error) {
-               console.log('Sorry, could not connect to group');
+               console.log('Could not connect to the Group..');
             });
       },
-      addChatWindow: function () {
-         // if already window is present
-         if ($('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"]').length) {
-            return;
-         }
+      showChatWindow: function () {
          var html = '';
          html += '<div class="box chat-window" data-group-id="' + this.room_node + '">';
-         html += '<div class="header"><i class="material-icons">chat</i><div class="title">' + this.room_name + '</div><a href="#" class="close-chat"><i class="material-icons">clear</i></a></div>';
-         html += '<ul class="chat-messages"></ul>';
+         html += '<div class="header"><i class="material-icons">chat</i><div class="title">' + this.room_title + '</div><a href="#" class="close-chat"><i class="material-icons">clear</i></a></div>';
+         html += '<ul class="chat-messages"><li>Connecting to group.. Please wait..</li></ul>';
          html += '<div class="send-message"><i class="material-icons emotions-icon">insert_emoticon</i><input type="text" placeholder="Start Chatting"><i class="material-icons attach-icon">wb_cloudy</i></div>';
          html += '</div>';
          $('.chat-windows-wrapper').append(html);
@@ -97,50 +174,43 @@ function joinGroup(conn, room_node, room_name, user_name) {
          this.domEl.messageList = $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"] ul.chat-messages');
          this.domEl.textInput = $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"] input[type="text"]');
       },
-      /**
-     * Connect Connection to a Room node via Strophe Pubsub Library.
-     * params
-     * 1. conn -> Strophe Connection
-     * 2. room_node -> Room to connect to
-     * 3. subscribe_event (function) -> Function to handle events inside Room.
-     */
       connectToGroup: function () {
          var self = this;
          return new Promise(function (fulfill, reject) {
-            self.conn.pubsub.subscribe(self.room_node, [], self.subscribe_event, fulfill, reject);
+            self.conn.pubsub.subscribe(self.room_node, [], self.onMessageEvent, fulfill, reject);
          });
       },
-      subscribe_event: function (message) {
+      onMessageEvent: function (message) {
          var _data = $(message).children('event')
             .children('items')
             .children('item').text();
 
          var parsedDecodedData = JSON.parse(decodeURIComponent(_data));
-         var user_from = parsedDecodedData.message_from;
+         CHAT_BOX.addMessage(parsedDecodedData)
+         return true;
+      },
+      addMessage: function (message_obj) {
+         var user_from = message_obj.message_from;
          var html = '';
-         if (user_from === Messenger.user_name) {
+         if (user_from === this.user_name) {
             html += '<li class="chat-message us">';
          } else {
             html += '<li class="chat-message them">';
          }
-         html += parsedDecodedData.message_text_data;
+         html += message_obj.message_text_data;
          html += '</li>';
-         $(Messenger.domEl.messageList).append(html);
-         Messenger.domEl.messageList.find('li:last-child').velocity("scroll", {
-            container: Messenger.domEl.messageList,
+         $(this.domEl.messageList).html('').append(html);
+         this.domEl.messageList.find('li:last-child').velocity("scroll", {
+            container: this.domEl.messageList,
             duration: 100
          });
-         return true;
       },
-      bindEvents: function () {
+      bindChatEvents: function () {
          var self = this;
          $(this.domEl.textInput).keyup(function (e) {
             if (e.keyCode === 13) {
                self.sendMessage();
             }
-         });
-         $(this.domEl.closeButton).click(function (e) {
-            self.removeConnection();
          });
       },
       sendMessage: function () {
@@ -159,6 +229,28 @@ function joinGroup(conn, room_node, room_name, user_name) {
             this.conn.pubsub.publish(this.room_node, [{ 'attrs': '', data: encodeStrifiedOp }]);
             $(this.domEl.textInput).val('');
          }
+      },
+   }
+   CHAT_BOX.init();
+}
+
+
+
+/**
+ * This function manages Joining, handling events and deleting Group to chat.
+ * params
+ * 1. conn -> Strophe Connection
+ * 2. room_node -> Room to connect to
+ * 3. room_name -> Title of the Room
+ */
+function joinGroup(conn, room_node, room_name, user_name) {
+
+   var Messenger = {
+
+      bindEvents: function () {
+         $(this.domEl.closeButton).click(function (e) {
+            self.removeConnection();
+         });
       },
       removeConnection: function () {
          this.unbindEvents();
