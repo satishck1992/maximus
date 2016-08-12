@@ -10,6 +10,8 @@ This Project is SportsUnity Control Station.
 Libraries Used in Chat Page -
 1. Strophe.JS {for xmpp connection and pubsub communication}
 2. holmes.js {for in page text search}
+3. Todo :
+   a. https://css-tricks.com/examples/HorzScrolling/ 
 
 
 Libraries Used to be in News Page -
