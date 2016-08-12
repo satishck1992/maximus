@@ -50,7 +50,7 @@ $('document').ready(function () {
             var room_title = getRoomTitle(this);
             // self.openPeekWindow(self.conn, room_node, room_title);
          });
-         $('ul.groups-list .group_join--btn:not').click(function (e) {
+         $('ul.groups-list .group_join--btn').click(function (e) {
             e.preventDefault();
             var room_node = getRoomNode(this);
             var room_title = getRoomTitle(this);
