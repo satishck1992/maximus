@@ -59,12 +59,19 @@ $('document').ready(function () {
             var room_title = getRoomTitle(this);
             // self.openPeekWindow(self.conn, room_node, room_title);
          });
-         $('ul.groups-list .group_join--btn').click(function (e) {
+         $('ul.groups-list .group_join--btn:not("opened")').click(function (e) {
             e.preventDefault();
+            var self2= this;
+            if($(this).hasClass('opened')) {
+               return;
+            }
             var room_node = getRoomNode(this);
             var room_title = getRoomTitle(this);
-
-            openChatWindow(self.conn, room_node, room_title, CONFIG.user.jid);
+            $(this).addClass('opened');
+            openChatWindow(self.conn, room_node, room_title, CONFIG.user.jid, onCloseEvent);
+            function onCloseEvent() {
+               $(self2).removeClass('opened');
+            }
          });
          function getRoomNode(el) {
             return $(el).closest('li.group').data('group-id');
@@ -154,7 +161,7 @@ function getRoomsList() {
 /**
  * 
  */
-function openChatWindow(conn, room_node, room_title, user_jid) {
+function openChatWindow(conn, room_node, room_title, user_jid, closeEvent) {
 
    var CHAT_BOX = {
       conn: conn,
@@ -256,6 +263,7 @@ function openChatWindow(conn, room_node, room_title, user_jid) {
          this.unbindEvents();
          this.closeConnection();
          this.removeDomElement();
+         closeEvent();
       },
       unbindEvents: function () {
          $(this.domEl.textInput).unbind();
