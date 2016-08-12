@@ -88,6 +88,7 @@ main#index {
       height: 100px;
       line-height: 100px;
       font-size: 1.8rem;
+      font-weight: bold;
       color: #004d99;
       font-family: 'Inconsolata';
       text-align: center; }
