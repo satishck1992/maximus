@@ -238,7 +238,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
             container: this.domEl.messageList,
             duration: 100
          });
-         if(user_from !== this.user_name) {
+         if (user_from !== this.user_name) {
             this.highlightNotification();
          }
       },

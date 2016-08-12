@@ -4,7 +4,7 @@
 <head>
    <meta charset="UTF-8">
    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   <title>Chat - Project Maximus - SportsUnity Control Station</title>
+   <title>News - Project Maximus - SportsUnity Control Station</title>
    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
@@ -20,12 +20,12 @@
                Project Maximus
             </a>
          </li>
-         <li class="active">
+         <li>
             <a href="chat.html">
                <i class="material-icons left">chat</i> Chat Control
             </a>
          </li>
-         <li>
+         <li class="active">
             <a href="news.html">
                <i class="material-icons left">inbox</i> News Control
             </a>
@@ -38,34 +38,13 @@
       </ul>
    </header>
 
-   <main id="chat">
-      <div class="groups-list-wrapper">
-         <div class="box groups-list-box">
-            <div class="search">
-               <input type="search" placeholder="Search for a Group">
-               <i class="material-icons">search</i>
-            </div>
-            <ul class="groups-list">
-               <li class="loading">
-                  Loading Groups.. Please wait..
-               </li>
-            </ul>
-         </div>
-      </div>
-      <div class="chat-windows-wrapper"></div>
+   <main id="news">
+
    </main>
 
-   <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
    <script src="../node_modules/jquery/dist/jquery.js"></script>
    <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
-   <script src="../node_modules/strophe/strophe.js"></script>
-   <script src="../node_modules/strophe.pubsub.js"></script>
-   <script src="../node_modules/flXHR.js"></script>
-   <script src="../node_modules/strophe.flxhr.js"></script>
-   <script src="../node_modules/holmes.js/js/holmes.js"></script>
-   <script src="../node_modules/holmes.js/js/microlight.js"></script>
 
-   <script src="js/chat.js"></script>
 </body>
 
 </html>
