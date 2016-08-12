@@ -165,6 +165,8 @@ main#chat {
           padding-top: 12px;
           padding-bottom: 12px;
           min-height: 100px; }
+          main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group.active {
+            background: #FCF4D9; }
           main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .avatar {
             padding: 0 15px; }
             main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .avatar img {

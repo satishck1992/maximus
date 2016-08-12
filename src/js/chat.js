@@ -68,9 +68,14 @@ $('document').ready(function () {
             var room_node = getRoomNode(this);
             var room_title = getRoomTitle(this);
             $(this).addClass('opened');
-            openChatWindow(self.conn, room_node, room_title, CONFIG.user.jid, onCloseEvent);
+            openChatWindow(self.conn, room_node, room_title, CONFIG.user.jid, onCloseEvent, successEvent);
             function onCloseEvent() {
                $(self2).removeClass('opened');
+               $(self2).closest('li.group').removeClass('active');
+            }
+
+            function successEvent() {
+               $(self2).closest('li.group').addClass('active');
             }
          });
          function getRoomNode(el) {
@@ -161,7 +166,7 @@ function getRoomsList() {
 /**
  * 
  */
-function openChatWindow(conn, room_node, room_title, user_jid, closeEvent) {
+function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, successCb) {
 
    var CHAT_BOX = {
       conn: conn,
@@ -181,6 +186,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent) {
             }, function (error) {
                self.domEl.messageList.find('li.connecting').addClass('error').html('Could not connect to the Group.');
             });
+         successCb();
       },
       showChatWindow: function () {
          var html = '';

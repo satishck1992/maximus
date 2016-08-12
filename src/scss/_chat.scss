@@ -77,6 +77,9 @@ main#chat {
           padding-top: 12px;
           padding-bottom: 12px;
           min-height: 100px;
+          &.active {
+             background: #FCF4D9;
+          }
           .avatar {
             padding: 0 15px;
             img {
