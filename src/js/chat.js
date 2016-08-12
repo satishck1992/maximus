@@ -212,7 +212,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
          // library error work-a-round, else message repeats in multiple group.
          var _event__node = $(message).children('event').children('items').attr('node');
          if (_event__node !== CHAT_BOX.room_node) {
-            return;
+            return true;
          }
 
          var _data = $(message).children('event')
