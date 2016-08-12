@@ -143,6 +143,12 @@ main#chat {
       height: 87%;
       display: flex;
       flex-direction: column;
+      &.peek-window .header{
+         background: #FF5964;
+      }
+      &.message-notification .header {
+         background: #E9724C;
+      }
       .header {
         flex: 0 0 50px;
         display: flex;

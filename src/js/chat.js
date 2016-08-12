@@ -61,8 +61,8 @@ $('document').ready(function () {
          });
          $('ul.groups-list .group_join--btn:not("opened")').click(function (e) {
             e.preventDefault();
-            var self2= this;
-            if($(this).hasClass('opened')) {
+            var self2 = this;
+            if ($(this).hasClass('opened')) {
                return;
             }
             var room_node = getRoomNode(this);
@@ -157,7 +157,7 @@ function getRoomsList() {
             name: 'Euros 2016 Germany vs France : World Champions face the hosts',
             image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/07/germany-vs-france.jpg',
             user_count: 4
-         }
+         },
       ]);
    });
 }
@@ -174,7 +174,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
       room_title: room_title,
       user_jid: user_jid,
       user_name: '',
-      domEl: { 'closeButton': '', 'messageList': '', 'textInput': '' },
+      domEl: { 'mainDiv': '', 'closeButton': '', 'messageList': '', 'textInput': '' },
       init: function () {
          var self = this;
          this.user_name = 'lalu';
@@ -196,6 +196,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
          html += '<div class="send-message"><i class="material-icons emotions-icon">insert_emoticon</i><input type="text" placeholder="Start Chatting"><i class="material-icons attach-icon">wb_cloudy</i></div>';
          html += '</div>';
          $('.chat-windows-wrapper').append(html);
+         this.domEl.mainDiv = $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"]');
          this.domEl.closeButton = $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"] a.close-chat');
          this.domEl.messageList = $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"] ul.chat-messages');
          this.domEl.textInput = $('.chat-windows-wrapper').find('div[data-group-id="' + this.room_node + '"] input[type="text"]');
@@ -207,6 +208,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
          });
       },
       onMessageEvent: function (message) {
+         console.log(message);
          // library error work-a-round, else message repeats in multiple group.
          var _event__node = $(message).children('event').children('items').attr('node');
          if (_event__node !== CHAT_BOX.room_node) {
@@ -218,7 +220,7 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
             .children('item').text();
 
          var parsedDecodedData = JSON.parse(decodeURIComponent(_data));
-         CHAT_BOX.addMessage(parsedDecodedData)
+         CHAT_BOX.addMessage(parsedDecodedData);
          return true;
       },
       addMessage: function (message_obj) {
@@ -236,9 +238,18 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
             container: this.domEl.messageList,
             duration: 100
          });
+         if(user_from !== this.user_name) {
+            this.highlightNotification();
+         }
       },
       bindChatEvents: function () {
          var self = this;
+         $(this.domEl.mainDiv).click(function (e) {
+            self.unhighlightNotification();
+         })
+         $(this.domEl.textInput).focus(function (e) {
+            self.unhighlightNotification();
+         });
          $(this.domEl.textInput).keyup(function (e) {
             if (e.keyCode === 13) {
                self.sendMessage();
@@ -247,6 +258,12 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
          $(this.domEl.closeButton).click(function (e) {
             self.removeConnection();
          });
+      },
+      highlightNotification: function () {
+         this.domEl.mainDiv.addClass('message-notification');
+      },
+      unhighlightNotification: function () {
+         this.domEl.mainDiv.removeClass('message-notification');
       },
       sendMessage: function () {
          var textMessage = $(this.domEl.textInput).val();
