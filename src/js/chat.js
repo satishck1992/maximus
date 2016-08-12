@@ -44,6 +44,15 @@ $('document').ready(function () {
       },
       bindRoomEvents: function () {
          var self = this;
+         var h = new holmes({
+            input: '.groups-list-box input',
+            find: 'ul.groups-list li',
+            placeholder: 'No result found..',
+            instant: true,
+            class: {
+               hidden: 'hide'
+            }
+         });
          $('ul.groups-list .group_peek--btn').click(function (e) {
             e.preventDefault();
             var room_node = getRoomNode(this);
@@ -65,7 +74,7 @@ $('document').ready(function () {
          }
       },
       showErrorMsg: function (err0r_msg) {
-         var html= '<li class="error">'+err0r_msg+'</li>';
+         var html = '<li class="error">' + err0r_msg + '</li>';
          $('ul.groups-list').html(html);
       }
    }
@@ -186,9 +195,9 @@ function openChatWindow(conn, room_node, room_title, user_jid) {
       },
       onMessageEvent: function (message) {
          // library error work-a-round, else message repeats in multiple group.
-         var _event__node= $(message).children('event').children('items').attr('node');
-         if(_event__node !== CHAT_BOX.room_node) {
-            return ;
+         var _event__node = $(message).children('event').children('items').attr('node');
+         if (_event__node !== CHAT_BOX.room_node) {
+            return;
          }
 
          var _data = $(message).children('event')

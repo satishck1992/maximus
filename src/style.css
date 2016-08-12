@@ -195,6 +195,10 @@ main#chat {
               color: #d6402d; }
             main#chat .groups-list-wrapper .groups-list-box ul.groups-list li.group .action .group_join--btn {
               margin-top: 6px; }
+        main#chat .groups-list-wrapper .groups-list-box ul.groups-list #holmes-placeholder {
+          padding: 12px;
+          font-weight: bold;
+          text-align: center; }
   main#chat .chat-windows-wrapper {
     flex: 1;
     position: relative;
