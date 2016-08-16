@@ -93,6 +93,9 @@ main#index {
       font-family: 'Inconsolata';
       text-align: center; }
 
+main {
+  padding-left: 240px; }
+
 main#chat {
   height: 100%;
   display: flex; }
@@ -310,3 +313,41 @@ main#chat {
           main#chat .chat-windows-wrapper .chat-window .send-message input[type="text"]:focus:not([readonly]) {
             box-shadow: none;
             border-bottom: 0; }
+
+main#news {
+  height: 100%;
+  padding-left: 240px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column; }
+  main#news ul.secondary-menu {
+    flex: 0 0 60px;
+    background: #fff;
+    margin: 0;
+    display: flex;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 18px;
+    border-bottom: 1px solid #e3e3e3; }
+    main#news ul.secondary-menu li {
+      margin: auto 18px; }
+      main#news ul.secondary-menu li a {
+        color: #424242;
+        text-transform: uppercase;
+        font-weight: bold; }
+        main#news ul.secondary-menu li a.active {
+          color: #004d99; }
+  main#news .content {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto; }
+    main#news .content .carousel-control .col {
+      display: flex;
+      background: #fff;
+      padding: 12px; }
+      main#news .content .carousel-control .col .box {
+        flex: 1;
+        background: #e3e3e3;
+        margin-left: 6px;
+        margin-right: 6px;
+        height: 250px; }
