@@ -44,12 +44,20 @@
          <li><a href="news_add.html">Add News</a></li>
       </ul>
       <div class="content">
-         <div class="carousel-control row">
-            <div class="col s12">
-               <div class="box box1"></div>
-               <div class="box box2"></div>
-               <div class="box box3"></div>
-               <div class="box box4"></div>
+         <div class="carousel-wrapper row">
+            <div id="carousel-control" class="col s12">
+               <div class="box box1">
+                  <div class="name">Box 1</div>
+               </div>
+               <div class="box box2">
+                  <div class="name">Box 2</div>
+               </div>
+               <div class="box box3">
+                  <div class="name">Box 3</div>
+               </div>
+               <div class="box box4">
+                  <div class="name">Box 4</div>
+               </div>
             </div>
             <div class="col s12">
                <a href="#!" class="btn waves-effect waves-light">Save Carousel</a>
@@ -155,9 +163,10 @@
       </div>
    </main>
 
+   <script src="../node_modules/Sortable.min.js"></script>
    <script src="../node_modules/jquery/dist/jquery.js"></script>
    <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
-
+   <script src="js/news/index.js"></script>
 </body>
 
 </html>
