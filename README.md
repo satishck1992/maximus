@@ -14,7 +14,12 @@ Libraries Used in Chat Page -
    a. https://css-tricks.com/examples/HorzScrolling/ 
 
 
+Libraries Used -
+1. Kendo grid.
+
 Libraries Used to be in News Page -
 1. https://harvesthq.github.io/chosen/
 2. http://nigelotoole.github.io/progress-tracker/
 3. https://bitsofco.de/realtime-form-validation/
+
+4 Edit Records Using External Forms | Kendo UI Grid , http://stackoverflow.com/questions/13613098/refresh-a-single-kendo-grid-row

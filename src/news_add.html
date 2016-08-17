@@ -50,7 +50,7 @@
                <div class="row">
                   <div class="input-field col s6">
                      <select id="news-sportstype">
-                        <option value="" disabled selected>Choose Option</option>
+                        <option value="" disabled selected>Choose a Sports</option>
                         <option value="CRI">Cricket</option>
                         <option value="Foo">Football</option>
                      </select>
@@ -59,6 +59,10 @@
                   <div class="input-field col s12">
                      <input type="text" id="news-headline">
                      <label for="news-headline">Set a Headline</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <input type="text" id="news-article-content">
+                     <label for="news-article-content">Article Image Content</label>
                   </div>
                   <div class="file-field input-field col s12">
                      <div class="btn">
@@ -77,13 +81,29 @@
                      <input type="text" id="news-icebreaker">
                      <label for="news-icebreaker">Icebreaker</label>
                   </div>
+                  <div class="file-field input-field col s12">
+                     <div class="btn">
+                        <span>IceBreaker Image</span>
+                        <input type="file">
+                     </div>
+                     <div class="file-path-wrapper">
+                        <input type="text" class="file-path validate" placeholder="Upload Ice Breaker Image">
+                     </div>
+                  </div>
                   <div class="input-field col s12">
                      <input type="text" id="news-pollquestion">
                      <label for="news-pollquestion">Enter Poll Question</label>
                   </div>
                   <div class="input-field col s12">
+                     <input type="text" id="news-notification-content">
+                     <label for="news-notification-content">Enter Notification Content</label>
+                  </div>
+                  <div class="input-field col s12">
                      <button class="btn waves-effect waves-light" type="submit" name="action">
                         Submit
+                     </button>
+                     <button class="btn waves-effect waves-light save-as-draft-btn">
+                        Save as Draft
                      </button>
                      <button class="btn waves-effect waves-light" type="reset" name="action">
                         Reset Form
