@@ -41,7 +41,7 @@ $('document').ready(function () {
                html += '<i class="material-icons preview_icon">visibility</i><i class="material-icons edit_icon">create</i><i class="material-icons delete_icon">delete_forever</i>';
             } else if(item.status=== 'unpublished') {
                if(user_role=== 'admin') {
-                  html+= '<i class="material-icons publish_icon>android</i>';
+                  html+= '<i class="material-icons publish_icon">android</i>';
                }
                html += '<i class="material-icons preview_icon">visibility</i><i class="material-icons edit_icon">create</i><i class="material-icons delete_icon">delete_forever</i>';
             } else {
