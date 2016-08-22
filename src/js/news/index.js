@@ -57,14 +57,14 @@ function getNewsList() {
          headline: 'Eius Facilis Quae Saepe',
          sports_type: 'Cricket',
          date_time: 11100001212,
-         status: 'accepted'
+         status: 'unpublished'
       },
       {
          id: 4,
          headline: 'Eos Temporibus A Reiciendis',
          sports_type: 'Football',
          date_time: 11100001224,
-         status: 'pending'
+         status: 'unpublished'
       }
    ];
 }
