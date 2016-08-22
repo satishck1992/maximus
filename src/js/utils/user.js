@@ -18,3 +18,17 @@ function isUserAuthenticated() {
       reject();
    });
 }
+
+/**
+ * Function to authenticate User.
+ */
+function authenticateUser(user_name, password) {
+   return new Promise(function (success, reject) {
+      var HARD_CODED_USER = { user_name: 'admin', password: 'admin', user_role: 'admin' };
+      if (user_name === HARD_CODED_USER.user_name && password === HARD_CODED_USER.password) {
+         success({ success: true, user_role: 'admin' });
+      } else {
+         reject({ success: false });
+      }
+   });
+}

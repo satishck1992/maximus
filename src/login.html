@@ -22,7 +22,7 @@
         Welcome to Sports Unity Control Panel. <br />
         Sign in to continue
       </span>
-         <div class="card login-card">
+         <div class="card login-card hide">
             <div class="row">
                <form id="login-form" class="col s12">
                   <div class="card-content">
@@ -37,7 +37,6 @@
                            <input type="password" id="password" required>
                            <label for="password">Password</label>
                         </div>
-                        <span class="result error"></span>
                      </div>
                   </div>
                   <div class="card-action">
@@ -51,8 +50,9 @@
    <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
    <script src="../node_modules/jquery/dist/jquery.js"></script>
    <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
-   <script src="js/_utils.js"></script>
-   <script src="js/login.js"></script>
+   <script src="js/utils/utility.js"></script>
+   <script src="js/utils/user.js"></script>
+   <script src="js/login/login.js"></script>
 </body>
 
 </html>

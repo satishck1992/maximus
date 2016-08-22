@@ -34,6 +34,10 @@ h6,
   height: 6px!important;
 }
 
+.toast.error {
+   background-color: #F71735;
+}
+
 @import 'index';
 
 @import 'sidebar';
