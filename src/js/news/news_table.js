@@ -18,6 +18,8 @@ $('document').ready(function () {
          loadNews();
       });
 
+      $('.news-table tbody').on("click", "td.actions a", function(ev) {});
+
       function loadNews() {
          var filterSportsType = $("#filter-sportsType").val();
          var filterNewsStatusType = $("#filter-newsStatusType").val();
@@ -36,18 +38,18 @@ $('document').ready(function () {
             html += '<td>' + item.headline + '</td>';
             html += '<td>' + item.date_time + '</td>';
             html += '<td>' + item.status + '</td>';
-            html+= '<td>';
+            html+= '<td class="actions">';
             if(item.status=== 'draft') {
-               html += '<i class="material-icons preview_icon">visibility</i><i class="material-icons edit_icon">create</i><i class="material-icons delete_icon">delete_forever</i>';
+               html += '<a href="#" class="preview_icon"><i class="material-icons">visibility</i></a><a href="#" class="edit_icon"><i class="material-icons">create</i></a><a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
             } else if(item.status=== 'unpublished') {
                if(user_role=== 'admin') {
-                  html+= '<i class="material-icons publish_icon">android</i>';
+                  html+= '<a href="#" class="publish_icon"><i class="material-icons">android</i></a>';
                }
-               html += '<i class="material-icons preview_icon">visibility</i><i class="material-icons edit_icon">create</i><i class="material-icons delete_icon">delete_forever</i>';
+               html += '<a href="#" class="preview_icon"><i class="material-icons">visibility</i></a><a href="#" class="edit_icon"><i class="material-icons">create</i></a><a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
             } else {
-               html += '<i class="material-icons preview_icon">visibility</i>';
+               html += '<a href="#" class="preview_icon"><i class="material-icons">visibility</i></a>';
                if(user_role=== 'admin') {
-                  html+= '<i class="material-icons delete_icon">delete_forever</i>';
+                  html+= '<a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
                }
             }
             html+= '</td>';
