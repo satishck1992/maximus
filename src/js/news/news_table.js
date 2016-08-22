@@ -18,7 +18,19 @@ $('document').ready(function () {
          loadNews();
       });
 
-      $('.news-table tbody').on("click", "td.actions a", function(ev) {});
+      $('.news-table tbody').on("click", "td.actions a", function(ev) {
+         var news_id= $(this).closest('tr').data('id');
+         var self= this;
+         if($(this).hasClass('publish_icon')) {
+            publishNewsItem(news_id).then(function(success) {
+               $(self).closest('tr').data('status', 'published');
+               $(self).closest('tr').find('td.status').html('Published');
+               $(self).remove();
+            }, function(err) {
+               
+            });
+         }
+      });
 
       function loadNews() {
          var filterSportsType = $("#filter-sportsType").val();
@@ -32,12 +44,12 @@ $('document').ready(function () {
       function buildHtml(news_list) {
          var html = '';
          $.each(news_list, function (i, item) {
-            html += '<tr class="' + item.status + '" data-id="' + item.id + '">';
+            html += '<tr data-status="' + item.status + '" data-id="' + item.id + '">';
             html += '<td>' + (i + 1) + '</td>';
             html += '<td>' + item.sports_type + '</td>';
             html += '<td>' + item.headline + '</td>';
             html += '<td>' + item.date_time + '</td>';
-            html += '<td>' + item.status + '</td>';
+            html += '<td class="status">' + item.status + '</td>';
             html+= '<td class="actions">';
             if(item.status=== 'draft') {
                html += '<a href="#" class="preview_icon"><i class="material-icons">visibility</i></a><a href="#" class="edit_icon"><i class="material-icons">create</i></a><a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
@@ -96,5 +108,11 @@ function fetchNews(sportsTypeFilter, newsStatusFilter, user_name) {
          }
       ];
       fulfill(news_item);
+   });
+}
+
+function publishNewsItem(news_Id) {
+   return new Promise(function(fulfill, reject) {
+      fulfill(true);
    });
 }
