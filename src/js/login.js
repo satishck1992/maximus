@@ -14,10 +14,12 @@ $('document').ready(function () {
       var isAuth = authenticate(user_id, password);
       isAuth.then(function (user_info) {
          setCookie('user_role', user_info.user_role, CONST['cookie-expirations']);
+         setCookie('user_name', user_id, CONST['cookie-expirations']);
          window.location.href = CONST['success-page'];
       }, function (error) {
          // delete cookie.
          setCookie('user_role', '', -1);
+         setCookie('user_name', '', -1);
          $(".result").html(CONST['user-msg']);
       });
    });
