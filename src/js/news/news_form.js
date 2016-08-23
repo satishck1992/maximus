@@ -7,7 +7,18 @@ $('document').ready(function () {
 
    isUserAuthenticated().then(function (user_info) {
 
+      var user_name = user_info.user_name;
+      var user_role = user_info.user_role;
+
       $('select').material_select();
+      if (user_role === 'admin') {
+         $(".only_admin").removeClass('hide');
+      }
+      $('.logout-btn').click(function (e) {
+         e.preventDefault();
+         logOutUser();
+      });
+
       var type = getQueryVariable('type');
       if (type === 'edit' || type === 'preview') {
          var news_id = getQueryVariable('news_id');
@@ -26,7 +37,7 @@ $('document').ready(function () {
          });
       }
 
-      if(type === 'edit') {
+      if (type === 'edit') {
          $('form').on('submit', saveEditForm);
          $(".save-as-draft-btn").click(function (ev) {
             saveEditForm(ev, $('form'), 'draft', news_id);
@@ -41,7 +52,7 @@ $('document').ready(function () {
       function saveForm(ev, form, status) {
          ev.preventDefault();
          var form = form ? form : $(this);
-         var status= status ? status : 'unpublished';
+         var status = status ? status : 'unpublished';
          var isValid = validateFields();
          createNews(form, status).then(function (success) {
             askUser('Would you like to add more news', function (userAnswer) {
@@ -57,7 +68,7 @@ $('document').ready(function () {
       function saveEditForm(ev, form, status, news_id) {
          ev.preventDefault();
          var form = form ? form : $(this);
-         var status= status ? status : 'unpublished';
+         var status = status ? status : 'unpublished';
          var isValid = validateFields();
          editNews(news_id, form, status).then(function (success) {
             window.location.href = 'news.html';

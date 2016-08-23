@@ -11,6 +11,13 @@ $('document').ready(function () {
 
       fetchNews();
       $('select').material_select();
+      if(user_role=== 'admin') {
+         $(".only_admin").removeClass('hide');
+      }
+      $('.logout-btn').click(function(e) {
+         e.preventDefault();
+         logOutUser();
+      });
 
       $('.news-table tbody').on("click", "td.actions a.delete_icon", function (ev) {
          var newsRow = $(this).closest('tr');

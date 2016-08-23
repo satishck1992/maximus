@@ -90,7 +90,20 @@ $('document').ready(function () {
          $('ul.groups-list').html(html);
       }
    }
-   CHAT_CONTROL.init();
+   isUserAuthenticated().then(function (user_info) {
+
+      var user_name = user_info.user_name;
+      var user_role = user_info.user_role;
+
+      if (user_role === 'admin') {
+         $(".only_admin").removeClass('hide');
+      }
+      $('.logout-btn').click(function (e) {
+         e.preventDefault();
+         logOutUser();
+      });
+      CHAT_CONTROL.init();
+   });
 });
 
 /**

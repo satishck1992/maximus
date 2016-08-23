@@ -61,3 +61,10 @@ function addNewUser(user_name, password, user_role) {
       fulfill(true);
    });
 }
+
+
+function logOutUser() {
+   setCookie('user_role', '', -1);
+   setCookie('user_name', '', -1);
+   window.location.href= "login.html";
+}
