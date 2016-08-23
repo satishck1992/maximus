@@ -67,7 +67,7 @@ $('document').ready(function () {
 
          function getActionsOfNews(news, user_role) {
             var html = '';
-            var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.id + '"><i class="material-icons">visibility</i></a>';
+            var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.id + '" target="_blank"><i class="material-icons">visibility</i></a>';
             var edit_btn = '<a href="/news_form.html?type=edit&news_id=' + news.id + '"><i class="material-icons">create</i></a>';
             var delete_btn = '<a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
             var publish_btn = '<a href="#" class="publish_icon"><i class="material-icons">android</i></a>';

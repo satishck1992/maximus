@@ -25,7 +25,7 @@ function getNews(sports_type, news_status, user_name) {
  */
 function getSingleNews(news_id) {
    return new Promise(function (fulfill, reject) {
-      fulfill([]);
+      fulfill({ id: 1, headline: 'Atque', sports_type: 'Cricket', date_time: 11100001212, status: 'draft' });
    });
 }
 
@@ -62,7 +62,7 @@ function createNews(form, status) {
  * 2. form -> {HTML Element} Form containing new values.
  * @return promise
  */
-function editNews(news_id, form) {
+function editNews(news_id, form, status) {
    return new Promise(function (fulfill, reject) {
       fulfill({});
    });
