@@ -97,7 +97,8 @@ main#index {
       text-align: center; }
 
 main {
-  padding-left: 240px; }
+  padding-left: 240px;
+  overflow-y: auto; }
 
 main#chat {
   height: 100%;
@@ -356,3 +357,11 @@ main#news {
         margin-left: 6px;
         margin-right: 6px;
         height: 250px; }
+
+main#add-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; }
+  main#add-user .card {
+    width: 600px; }

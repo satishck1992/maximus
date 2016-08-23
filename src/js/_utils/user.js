@@ -58,11 +58,30 @@ function authenticateUser(user_name, password) {
  */
 function addNewUser(user_name, password, user_role) {
    return new Promise(function(fulfill, reject) {
-      fulfill(true);
+      $.ajax({
+         url: 'http://54.169.217.88/news_add_user',
+         method: 'POST',
+         data: {
+            username: user_name,
+            password: password,
+            user_role: user_role
+         },
+         success: function(response) {
+            if(response.info=== 'Success') {
+               fulfill();
+            }
+            reject(response.info);
+         },
+         error: function(err) {
+            reject(err);
+         }
+      });
    });
 }
 
-
+/**
+ * Function to logout user.
+ */
 function logOutUser() {
    setCookie('user_role', '', -1);
    setCookie('user_name', '', -1);

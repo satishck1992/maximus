@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <title>News - Project Maximus - SportsUnity Control Station</title>
+   <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+   <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
+   <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+   <header>
+      <ul class="side-nav fixed">
+         <li class="logo">
+            <a href="chat.html" class="brand-logo">
+               Project Maximus
+            </a>
+         </li>
+         <li>
+            <a href="chat.html">
+               <i class="material-icons left">chat</i> Chat Control
+            </a>
+         </li>
+         <li>
+            <a href="news.html">
+               <i class="material-icons left">inbox</i> News Control
+            </a>
+         </li>
+         <li>
+            <a href="stats.html">
+               <i class="material-icons left">pie_chart</i> Stats Control
+            </a>
+         </li>
+         <li class="active">
+            <a href="add_user.html" class="hide only_admin">
+               <i class="material-icons">face</i>Add user
+            </a>
+         </li>
+         <li>
+            <a href="#!" class="logout-btn">
+               <i class="material-icons">remove_circle</i>Logout
+            </a>
+         </li>
+      </ul>
+   </header>
+
+   <main id="add-user">
+      <div class="card register-card">
+         <div class="row">
+            <form id="registration-form" class="col s12">
+               <div class="card-content">
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input type="text" id="user_name" required>
+                        <label for="user_name">Username</label>
+                     </div>
+                     <div class="input-field col s12">
+                        <i class="material-icons prefix">https</i>
+                        <input type="password" id="password" required>
+                        <label for="password">Password</label>
+                     </div>
+                     <div class="input-field col s12">
+                        <i class="material-icons prefix">settings_applications</i>
+                        <select id="user_role">
+                           <option value="author">Author</option>
+                           <option value="admin">Admin</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-action">
+                  <button class="btn waves-effect waves-light" type="submit">Add User</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </main>
+
+   <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
+   <script src="js/_utils/utility.js"></script>
+   <script src="../node_modules/jquery/dist/jquery.js"></script>
+   <script src="js/_utils/user.js"></script>
+   <script src="js/_utils/news.js"></script>
+   <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
+   <script src="js/login/register.js"></script>
+</body>
+
+</html>

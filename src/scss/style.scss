@@ -43,8 +43,21 @@ h6,
 @import 'sidebar';
 main {
    padding-left: 240px;
+   
+   overflow-y: auto;
+   
 }
 @import 'chat';
 
 
 @import 'news';
+
+main#add-user {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   .card {
+      width: 600px;
+   }
+}
