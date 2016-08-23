@@ -21,6 +21,10 @@ function isUserAuthenticated() {
 
 /**
  * Function to authenticate User.
+ * @param
+ * 1. user_name -> {String} User Name
+ * 2. password -> {String} Password
+ * @return -> {Promise} based on success and failure. 
  */
 function authenticateUser(user_name, password) {
    return new Promise(function (success, reject) {
@@ -30,5 +34,19 @@ function authenticateUser(user_name, password) {
       } else {
          reject({ success: false });
       }
+   });
+}
+
+/**
+ * Function to add New User
+ * @param
+ * 1. user_name -> {String} User Name
+ * 2. password -> {String} Password
+ * 3. user_role -> {String} User Role
+ * @return -> {Promise} based on successful or fail addition
+ */
+function addNewUser(user_name, password, user_role) {
+   return new Promise(function(fulfill, reject) {
+      fulfill(true);
    });
 }
