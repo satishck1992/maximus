@@ -43,3 +43,8 @@ function getQueryVariable(variable)
        }
        return(false);
 }
+
+function askUser(msg, response) {
+   var userAnswer= confirm(msg);
+   response(userAnswer);
+}

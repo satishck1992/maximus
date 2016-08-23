@@ -11,7 +11,18 @@ $('document').ready(function () {
 
       fetchNews();
 
-      $('.news-table tbody').on("click", "td.actions a", function (ev) { });
+      $('.news-table tbody').on("click", "td.actions a.delete_icon", function (ev) {
+         var newsRow = $(this).closest('tr');
+         var newsId = newsRow.data('id');
+         askUser('Are you sure, you want to delete.. Check if news is present in Carousel?', function(userAnswer) {
+            if(userAnswer=== true) {
+               deleteNews(newsId).then(function(success) {
+                  newsRow.remove();
+               }, function(fail) {});
+            }
+         });
+      });
+      $('.news-table tbody').on("click", "td.actions a.publish_icon", function (ev) { });
       $('select').change(function (ev) {
          fetchNews();
       });
@@ -28,16 +39,22 @@ $('document').ready(function () {
       function addNewsToHTMLTable(list_of_news) {
          var html = '';
          $.each(list_of_news, function (i, news) {
-            html += '<tr data-status="' + news.status + '" data-id="' + news.id + '">';
-            html += '<td>' + (i + 1) + '</td>';
-            html += '<td>' + news.sports_type + '</td>';
-            html += '<td>' + news.headline + '</td>';
-            html += '<td>' + news.date_time + '</td>';
-            html += '<td>' + news.status + '</td>';
-            html += '<td>' + getActionsOfNews(news, user_role) + '</td>';
-            html += '</tr>';
+            html+= addSingleRow(i, news);
          });
          $('.news-table tbody').html(html);
+      }
+
+      function addSingleRow(i, news) {
+         var html = '';
+         html += '<tr data-status="' + news.status + '" data-id="' + news.id + '">';
+         html += '<td>' + (i + 1) + '</td>';
+         html += '<td>' + news.sports_type + '</td>';
+         html += '<td>' + news.headline + '</td>';
+         html += '<td>' + news.date_time + '</td>';
+         html += '<td>' + news.status + '</td>';
+         html += '<td class="actions">' + getActionsOfNews(news, user_role) + '</td>';
+         html += '</tr>';
+         return html;
 
          function getActionsOfNews(news, user_role) {
             var html = '';
