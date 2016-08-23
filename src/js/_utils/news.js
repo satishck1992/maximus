@@ -38,7 +38,7 @@ function getSingleNews(news_id) {
  */
 function publishSingleNews(news_id) {
    return new Promise(function(fulfill, reject) {
-      fulfill([]);
+      fulfill({ id: 2, headline: 'Vitae Aut Temporibus Ut', sports_type: 'Football', date_time: 11100001212, status: 'published' });
    });
 }
 
