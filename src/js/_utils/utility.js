@@ -33,7 +33,7 @@ function getCookie(cname) {
    return "";
 }
 
-function getQueryVariable(variable){
+function getQueryVariable(variable) {
    var query = window.location.search.substring(1);
    var vars = query.split("&");
    for (var i = 0; i < vars.length; i++) {
@@ -44,6 +44,17 @@ function getQueryVariable(variable){
 }
 
 function askUser(msg, response) {
-   var userAnswer= confirm(msg);
+   var userAnswer = confirm(msg);
    response(userAnswer);
+}
+
+function getBase64(file) {
+   return new Promise(function (fulfill) {
+      var FR = new FileReader();
+      FR.onload = function (readerEvt) {
+         var binaryString = readerEvt.target.result;
+         fulfill(btoa(binaryString));
+      }
+      FR.readAsBinaryString(file);
+   });
 }

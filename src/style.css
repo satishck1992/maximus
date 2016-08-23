@@ -321,7 +321,7 @@ main#chat {
 main#news {
   height: 100%;
   padding-left: 240px;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column; }
   main#news ul.secondary-menu {

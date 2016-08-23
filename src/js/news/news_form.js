@@ -54,15 +54,19 @@ $('document').ready(function () {
          var form = form ? form : $(this);
          var status = status ? status : 'unpublished';
          var isValid = validateFields();
-         createNews(form, status).then(function (success) {
-            askUser('Would you like to add more news', function (userAnswer) {
-               if (userAnswer === true) {
-                  form[0].reset();
-               } else {
-                  window.location.href = 'news.html';
-               }
-            })
-         }, function (fail) { });
+         var formData = makeFormObj(form, status);
+         formData.then(function (data) {
+            console.log(data);
+            createNews(data).then(function (success) {
+               askUser('Would you like to add more news', function (userAnswer) {
+                  if (userAnswer === true) {
+                     form[0].reset();
+                  } else {
+                     window.location.href = 'news.html';
+                  }
+               })
+            }, function (fail) { });
+         });
       }
 
       function saveEditForm(ev, form, status, news_id) {
@@ -78,6 +82,35 @@ $('document').ready(function () {
       function validateFields() {
          return true;
       }
+
+      function makeFormObj(form, state) {
+         return new Promise(function (fulfill) {
+            var $form = form;
+            var op = {
+               sport_type: $form.find('#news-sportstype').val(),
+               headline: $form.find('#news-headline').val(),
+               article_image_name: $form.find('#news-article-content').val(),
+               article_image_content: 'base64',
+               article_content: $form.find('#news-summary').val(),
+               ice_breaker_name: $form.find('#news-icebreaker').val(),
+               ice_breaker_content: 'base64',
+               poll_question: $form.find('#news-pollquestion').val(),
+               notification_content: $form.find('#news-notification-content').val(),
+               stats: [],
+               memes: [],
+               publish_date: '08/07/91',
+               state: state
+            };
+            getBase64($("#news-article-image")[0].files[0]).then(function (base64) {
+               op.article_image_content = base64;
+               getBase64($("#ice-breaker-image")[0].files[0]).then(function (base64) {
+                  op.ice_breaker_content = base64;
+                  fulfill(op);
+               });
+            });
+         });
+      }
+
    }, function (failure) {
       window.location.href = CONST.error_page;
    });

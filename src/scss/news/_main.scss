@@ -2,7 +2,7 @@ main#news {
    height: 100%;
    padding-left: 240px;
    // padding-right: 12px;
-   overflow: hidden;
+   overflow-y: auto;
    display: flex;
    flex-direction: column;
 

@@ -8,12 +8,19 @@
  */
 function getNews(sports_type, news_status, user_name) {
    return new Promise(function (fulfill, reject) {
-      fulfill([
-         { id: 1, headline: 'Atque', sports_type: 'Cricket', date_time: 11100001212, status: 'draft' },
-         { id: 2, headline: 'Vitae Aut Temporibus Ut', sports_type: 'Football', date_time: 11100001212, status: 'published' },
-         { id: 3, headline: 'Eius Facilis Quae Saepe', sports_type: 'Cricket', date_time: 11100001212, status: 'unpublished' },
-         { id: 4, headline: 'Eos Temporibus A Reiciendis', sports_type: 'Football', date_time: 11100001224, status: 'unpublished' }
-      ]);
+      $.ajax({
+         url: 'http://54.169.217.88/fetch_articles',
+         method: 'GET',
+         success: function(response) {
+            if(response.info=== 'Success') {
+               fulfill(response.articles);
+            }
+            reject(response.info);
+         },
+         error: function() {
+            reject('Could not connect.');
+         }
+      });
    });
 }
 
@@ -49,9 +56,22 @@ function publishSingleNews(news_id) {
  * 2. status -> {String} Status of the news setted. [draft/ unpublished]
  * @return promise
  */
-function createNews(form, status) {
+function createNews(formData) {
    return new Promise(function (fulfill, reject) {
-      fulfill({});
+      $.ajax({
+         url: 'http://54.169.217.88/add_article',
+         method: 'POST',
+         data: formData,
+         success: function(response) {
+            if(response.info=== 'Success') {
+               fulfill();
+            }
+            reject();
+         },
+         error: function() {
+            reject();
+         }
+      });
    });
 }
 
