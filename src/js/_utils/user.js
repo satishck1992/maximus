@@ -28,12 +28,23 @@ function isUserAuthenticated() {
  */
 function authenticateUser(user_name, password) {
    return new Promise(function (success, reject) {
-      var HARD_CODED_USER = { user_name: 'admin', password: 'admin', user_role: 'admin' };
-      if (user_name === HARD_CODED_USER.user_name && password === HARD_CODED_USER.password) {
-         success({ success: true, user_role: 'admin', user_name: 'admin' });
-      } else {
-         reject({ success: false });
-      }
+      $.ajax({
+         url: 'http://54.169.217.88/news_login',
+         method: 'POST',
+         data: {
+            username: user_name,
+            password: password
+         },
+         success: function(response) {
+            if(response.info=== 'Success') {
+               success({user_role: response.user_role, user_name: user_name});
+            }
+            reject(response.info);
+         },
+         error: function() {
+            reject('Could not connect to the Server..');
+         }
+      });
    });
 }
 
