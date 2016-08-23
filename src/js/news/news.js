@@ -10,6 +10,7 @@ $('document').ready(function () {
       var user_role = user_info.user_role;
 
       fetchNews();
+      $('select').material_select();
 
       $('.news-table tbody').on("click", "td.actions a.delete_icon", function (ev) {
          var newsRow = $(this).closest('tr');
@@ -41,6 +42,9 @@ $('document').ready(function () {
          var news_status = $("#filter-newsStatusType").val();
          getNews(sports_type, news_status, user_name).then(function (news_list) {
             addNewsToHTMLTable(news_list);
+            $('.news-table table').DataTable({
+               paging: false,
+            });
          });
       }
 
