@@ -25,7 +25,7 @@ $('document').ready(function () {
       $('.news-table tbody').on("click", "td.actions a.publish_icon", function (ev) {
          var newsRow = $(this).closest('tr');
          var newsId = newsRow.data('id');
-         var newsSrNo= Number(newsRow.find('td:first-child').html());
+         var newsSrNo = Number(newsRow.find('td:first-child').html());
          publishSingleNews(newsId).then(function (updated_news) {
             //if i can get created new news object.. life is easy
             newsRow.data('status', 'published');
@@ -49,7 +49,7 @@ $('document').ready(function () {
          var html = '';
          $.each(list_of_news, function (i, news) {
             html += '<tr data-status="' + news.status + '" data-id="' + news.id + '">';
-            html += addSingleRow(i, news);
+            html += addSingleRow(i + 1, news);
             html += '</tr>';
          });
          $('.news-table tbody').html(html);
@@ -57,7 +57,7 @@ $('document').ready(function () {
 
       function addSingleRow(i, news) {
          var html = '';
-         html += '<td>' + (i + 1) + '</td>';
+         html += '<td>' + i + '</td>';
          html += '<td>' + news.sports_type + '</td>';
          html += '<td>' + news.headline + '</td>';
          html += '<td>' + news.date_time + '</td>';
