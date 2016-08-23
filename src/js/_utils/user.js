@@ -73,7 +73,7 @@ function addNewUser(user_name, password, user_role) {
             reject(response.info);
          },
          error: function(err) {
-            reject(err);
+            reject(err.responseJSON.info);
          }
       });
    });
