@@ -8,7 +8,12 @@
  */
 function getNews(sports_type, news_status, user_name) {
    return new Promise(function (fulfill, reject) {
-      fulfill([]);
+      fulfill([
+         { id: 1, headline: 'Atque', sports_type: 'Cricket', date_time: 11100001212, status: 'draft' },
+         { id: 2, headline: 'Vitae Aut Temporibus Ut', sports_type: 'Football', date_time: 11100001212, status: 'published' },
+         { id: 3, headline: 'Eius Facilis Quae Saepe', sports_type: 'Cricket', date_time: 11100001212, status: 'unpublished' },
+         { id: 4, headline: 'Eos Temporibus A Reiciendis', sports_type: 'Football', date_time: 11100001224, status: 'unpublished' }
+      ]);
    });
 }
 
@@ -20,6 +25,19 @@ function getNews(sports_type, news_status, user_name) {
  */
 function getSingleNews(news_id) {
    return new Promise(function (fulfill, reject) {
+      fulfill([]);
+   });
+}
+
+
+/**
+ * Function to publish a News
+ * @param
+ * 1. news_id -> Id of the News to be published
+ * @return promise
+ */
+function publishSingleNews(news_id) {
+   return new Promise(function(fulfill, reject) {
       fulfill([]);
    });
 }

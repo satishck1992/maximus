@@ -78,34 +78,10 @@ $('document').ready(function () {
 function fetchNews(sportsTypeFilter, newsStatusFilter, user_name) {
    return new Promise(function (fulfill, reject) {
       var news_item = [
-         {
-            id: 1,
-            headline: 'Atque',
-            sports_type: 'Cricket',
-            date_time: 11100001212,
-            status: 'draft'
-         },
-         {
-            id: 2,
-            headline: 'Vitae Aut Temporibus Ut',
-            sports_type: 'Football',
-            date_time: 11100001212,
-            status: 'published'
-         },
-         {
-            id: 3,
-            headline: 'Eius Facilis Quae Saepe',
-            sports_type: 'Cricket',
-            date_time: 11100001212,
-            status: 'unpublished'
-         },
-         {
-            id: 4,
-            headline: 'Eos Temporibus A Reiciendis',
-            sports_type: 'Football',
-            date_time: 11100001224,
-            status: 'unpublished'
-         }
+         { id: 1, headline: 'Atque', sports_type: 'Cricket', date_time: 11100001212, status: 'draft' },
+         { id: 2, headline: 'Vitae Aut Temporibus Ut', sports_type: 'Football', date_time: 11100001212, status: 'published' },
+         { id: 3, headline: 'Eius Facilis Quae Saepe', sports_type: 'Cricket', date_time: 11100001212, status: 'unpublished' },
+         { id: 4, headline: 'Eos Temporibus A Reiciendis', sports_type: 'Football', date_time: 11100001224, status: 'unpublished' }
       ];
       fulfill(news_item);
    });
