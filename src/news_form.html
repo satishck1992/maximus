@@ -35,13 +35,13 @@
                <i class="material-icons left">pie_chart</i> Stats Control
             </a>
          </li>
-          <li>
+         <li>
             <a href="add_user.html" class="hide only_admin">
                <i class="material-icons">face</i>Add user
             </a>
          </li>
          <li>
-            <a href="#!" class="logout-btn">
+            <a href="#" onclick="logOutUser(); return false;" class="logout-btn">
                <i class="material-icons">remove_circle</i>Logout
             </a>
          </li>
@@ -109,14 +109,11 @@
                      <label for="news-notification-content">Enter Notification Content</label>
                   </div>
                   <div class="input-field col s12">
-                     <button class="btn waves-effect waves-light" type="submit" name="action">
-                        Send for Approval
+                     <button class="btn waves-effect waves-light submit-btn" type="submit" name="action">
+                        Create News
                      </button>
-                     <button class="btn waves-effect waves-light save-as-draft-btn">
-                        Save as Draft
-                     </button>
-                     <button class="btn waves-effect waves-light" type="reset" name="action">
-                        Reset Form
+                     <button class="btn waves-effect waves-light draft-btn">
+                        Save Draft
                      </button>
                   </div>
                </div>
@@ -125,13 +122,15 @@
       </div>
    </main>
    <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
-   <script src="js/_utils/utility.js"></script>
    <script src="../node_modules/jquery/dist/jquery.js"></script>
+   <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
+
+   <script src="js/_utils/CONST.js"></script>
+   <script src="js/_utils/utility.js"></script>
    <script src="js/_utils/user.js"></script>
    <script src="js/_utils/news.js"></script>
-   <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
-   <script src="js/news/news_form.js"></script>
 
+   <script src="js/news/news_form.js"></script>
 </body>
 
 </html>
