@@ -52,7 +52,7 @@ $('document').ready(function () {
       function saveForm(ev, form, status) {
          ev.preventDefault();
          var form = form ? form : $(this);
-         var status = status ? status : 'unpublished';
+         var status = status ? status : 'UnPublished';
          var isValid = validateFields();
          var formData = makeFormObj(form, status);
          formData.then(function (data) {

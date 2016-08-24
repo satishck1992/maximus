@@ -57,6 +57,7 @@ function publishSingleNews(news_id) {
  * @return promise
  */
 function createNews(formData) {
+   console.log(formData);
    return new Promise(function (fulfill, reject) {
       $.ajax({
          url: 'http://54.169.217.88/add_article',
