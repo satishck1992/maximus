@@ -65,7 +65,7 @@ function getBase64(file) {
  * 1. path -> {String} Location to send user to.
  */
 function redirectToPage(path) {
-   window.location.href= path;
+   window.location.href = path;
 }
 
 /**
@@ -75,4 +75,14 @@ function redirectToPage(path) {
  */
 function showError(err_msg) {
    Materialize.toast(err_msg, CONST.toast_time, 'error');
+}
+
+
+/**
+ * Function to do Admin Control in Page ie. show links that only admin can see.
+ */
+function adminControl(user_role) {
+   if (user_role === 'admin') {
+      $(".only_admin").removeClass('hide');
+   }
 }

@@ -7,21 +7,29 @@
  * @returns promise
  */
 function getNews(sports_type, news_status, user_name) {
+   var queryString = createQueryString();
    return new Promise(function (fulfill, reject) {
       $.ajax({
-         url: 'http://54.169.217.88/fetch_articles',
+         url: 'http://54.169.217.88/fetch_articles?user_name=' + user_name + queryString,
          method: 'GET',
-         success: function(response) {
-            if(response.info=== 'Success') {
+         success: function (response) {
+            if (response.info === 'Success') {
                fulfill(response.articles);
             }
             reject(response.info);
          },
-         error: function() {
+         error: function () {
             reject('Could not connect.');
          }
       });
    });
+
+   function createQueryString() {
+      var string = '';
+      if (sports_type) { string += '&article_sport_type=' + sports_type; }
+      if (news_status) { string += '&article_state=' + news_status; }
+      return string;
+   }
 }
 
 /**
@@ -43,9 +51,25 @@ function getSingleNews(news_id) {
  * 1. news_id -> Id of the News to be published
  * @return promise
  */
-function publishSingleNews(news_id) {
-   return new Promise(function(fulfill, reject) {
-      fulfill({ id: 2, headline: 'Vitae Aut Temporibus Ut', sports_type: 'Football', date_time: 11100001212, status: 'published' });
+function publishNews(news_id) {
+   return new Promise(function (fulfill, reject) {
+      $.ajax({
+         url: 'http://54.169.217.88/publish_article',
+         method: 'POST',
+         data: {
+            'article_id': news_id
+         },
+         success: function (response) {
+            if (response.info === 'Success') {
+               fulfill({ "publish_date": "23 08 2016", "article_sport_type": null, "article_id": 68, "article_headline": "test", "article_state": "Published" });
+            }
+
+            reject('Some error occured');
+         },
+         error: function (err) {
+            reject(err);
+         }
+      });
    });
 }
 
@@ -57,19 +81,18 @@ function publishSingleNews(news_id) {
  * @return promise
  */
 function createNews(formData) {
-   console.log(formData);
    return new Promise(function (fulfill, reject) {
       $.ajax({
          url: 'http://54.169.217.88/add_article',
          method: 'POST',
          data: formData,
-         success: function(response) {
-            if(response.info=== 'Success') {
+         success: function (response) {
+            if (response.info === 'Success') {
                fulfill();
             }
             reject();
          },
-         error: function() {
+         error: function () {
             reject();
          }
       });
@@ -97,6 +120,21 @@ function editNews(news_id, form, status) {
  */
 function deleteNews(news_id) {
    return new Promise(function (fulfill, reject) {
-      fulfill({});
+      $.ajax({
+         url: 'http://54.169.217.88/delete_article',
+         method: 'POST',
+         data: {
+            'article_id': news_id
+         },
+         success: function (response) {
+            if (response.info === 'Success') {
+               fulfill();
+            }
+            reject('Some Error Occured.');
+         },
+         error: function (err) {
+            reject('Couldnot connect to Server.');
+         }
+      })
    });
 }

@@ -2,12 +2,11 @@ $('document').ready(function () {
    'use strict';
 
    getUser()
-      // user is present, redirect to admin page.
       .then(function (success) {
          redirectToPage(CONST.success_page);
       })
-      // no user is present, initialize login form
       .catch(function (fail) {
+         // if no user is present, then only login form make sense.
          bindLoginEvt()
       });
 
@@ -20,7 +19,7 @@ $('document').ready(function () {
 
          authenticateUser(user_id, password)
             .then(function (user_data) {
-               setUser(user_data);
+               setUser(user_data.user_name, user_data.user_role);
                redirectToPage(CONST.success_page);
             })
             .catch(function (err) {
@@ -28,4 +27,5 @@ $('document').ready(function () {
             });
       });
    }
+
 });

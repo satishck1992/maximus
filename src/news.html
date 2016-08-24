@@ -8,7 +8,6 @@
    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
-   <link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
    <link rel="stylesheet" href="style.css">
 </head>
 
@@ -42,7 +41,7 @@
             </a>
          </li>
          <li>
-            <a href="#!" class="logout-btn">
+            <a href="#" onclick="logOutUser(); return false;" class="logout-btn">
                <i class="material-icons">remove_circle</i>Logout
             </a>
          </li>
@@ -94,13 +93,13 @@
    </main>
 
    <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
-   <script src="js/_utils/utility.js"></script>
    <script src="../node_modules/jquery/dist/jquery.js"></script>
+   <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
    <script src="js/_utils/CONST.js"></script>
+   <script src="js/_utils/utility.js"></script>
    <script src="js/_utils/user.js"></script>
    <script src="js/_utils/news.js"></script>
-   <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
-   <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
    <script src="js/news/news.js"></script>
 </body>
 
