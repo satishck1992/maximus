@@ -58,3 +58,12 @@ function getBase64(file) {
       FR.readAsBinaryString(file);
    });
 }
+
+/**
+ * Function to redirect user to a page.
+ * @param :
+ * 1. path -> {String} Location to send user to.
+ */
+function redirectToPage(path) {
+   window.location.href= path;
+}
