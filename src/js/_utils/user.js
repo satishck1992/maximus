@@ -1,4 +1,24 @@
 /**
+ * Function to get User Info.
+ * * @return -> {Promise} 
+ * Error = When no user is Present
+ * Success = return {user_name, user_role}
+ */
+function getUser() {
+   return new Promise(function (fulfill, reject) {
+      var user_cookies = { name: 'user_name', role: 'user_role' }
+
+      var user_name = getCookie(user_cookies.name);
+      var user_role = getCookie(user_cookies.role);
+
+      if (user_name && user_role) {
+         fulfill({ user_name: user_name, user_role: user_role });
+      }
+      reject('No User Present');
+   });
+}
+
+/**
  * Function to check whether user is authenticated to access page.
  * @return -> {Promise} based on success or error
  */
@@ -35,13 +55,13 @@ function authenticateUser(user_name, password) {
             username: user_name,
             password: password
          },
-         success: function(response) {
-            if(response.info=== 'Success') {
-               success({user_role: response.user_role, user_name: user_name});
+         success: function (response) {
+            if (response.info === 'Success') {
+               success({ user_role: response.user_role, user_name: user_name });
             }
             reject(response.info);
          },
-         error: function() {
+         error: function () {
             reject('Could not connect to the Server..');
          }
       });
@@ -57,7 +77,7 @@ function authenticateUser(user_name, password) {
  * @return -> {Promise} based on successful or fail addition
  */
 function addNewUser(user_name, password, user_role) {
-   return new Promise(function(fulfill, reject) {
+   return new Promise(function (fulfill, reject) {
       $.ajax({
          url: 'http://54.169.217.88/news_add_user',
          method: 'POST',
@@ -66,13 +86,13 @@ function addNewUser(user_name, password, user_role) {
             password: password,
             user_role: user_role
          },
-         success: function(response) {
-            if(response.info=== 'Success') {
+         success: function (response) {
+            if (response.info === 'Success') {
                fulfill();
             }
             reject(response.info);
          },
-         error: function(err) {
+         error: function (err) {
             reject(err.responseJSON.info);
          }
       });
@@ -85,5 +105,5 @@ function addNewUser(user_name, password, user_role) {
 function logOutUser() {
    setCookie('user_role', '', -1);
    setCookie('user_name', '', -1);
-   window.location.href= "login.html";
+   window.location.href = "login.html";
 }
