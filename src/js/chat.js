@@ -2,7 +2,7 @@ $('document').ready(function () {
 
    var CONFIG = {
       'service': { 'url': 'ws://54.169.217.88:5280/websocket', 'protocol': 'wss' },
-      'user': { 'jid': 'b@mm.io', 'password': 'password' },
+      'user': { 'jid': 'a@mm.io', 'password': 'a' },
       'room': { 'node': 'princely_musings' }
    }
 
@@ -31,11 +31,11 @@ $('document').ready(function () {
       buildGroupsHtml: function () {
          var html = '';
          $.each(this.rooms_list, function (i, room) {
-            html += '<li class="group" data-group-id="' + room.id + '">';
+            html += '<li class="group" data-group-id="' + room.discussion_id + '">';
             html += '<div class="avatar"><img src="' + room.image + '" class="circle" /></div>'
             html += '<div class="detail">';
-            html += '<div class="title">' + room.name + '</div>';
-            html += '<div class="meta"><span class="room-number"><i class="material-icons">pets</i> : ' + room.srno + '</span><span class="users-count"><i class="material-icons">face</i> ' + room.user_count + '</span></div>';
+            html += '<div class="title">' + room.headline + '</div>';
+            html += '<div class="meta"><span class="room-number"><i class="material-icons">pets</i> : ' + room.article_id + '</span><span class="users-count"><i class="material-icons">face</i> ' + room.user_count + '</span></div>';
             html += '</div>';
             html += '<div class="action"><a href="#" class="group_peek--btn"><i class="material-icons">hearing</i></a><a href="#" class="group_join--btn"><i class="material-icons">chat</i></a></div>';
             html += '</li>';
@@ -149,29 +149,19 @@ function connectXMPPServer(host, protocol, user_jid, user_password) {
 function getRoomsList() {
    // ajax call to get rooms list.
    return new Promise(function (fulfill, reject) {
-      fulfill([
-         {
-            srno: 1,
-            id: 'princely_musings',
-            name: 'The Troubled vs The Consistently Consistent: Pakistan vs England',
-            image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/07/england-vs-pakistan-schedule-2016-ireland-vs-pakistan-schedule-2016-770x462.jpg',
-            user_count: 7,
+      $.ajax({
+         url: 'http://54.169.217.88/get_all_discussions',
+         method: 'GET',
+         success: function(response) {
+            if(response.status=== 200) {
+               fulfill(response.info);
+            }
+            reject('Error occured.');
          },
-         {
-            srno: 1,
-            id: 'test_ultra_group_2',
-            name: 'Road to the final showdown: France',
-            image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/06/france.jpg',
-            user_count: 5
-         },
-         {
-            srno: 1,
-            id: 'princely_musings_3',
-            name: 'Euros 2016 Germany vs France : World Champions face the hosts',
-            image: 'https://www.sportsunity.co/blog/wp-content/uploads/2016/07/germany-vs-france.jpg',
-            user_count: 4
-         },
-      ]);
+         error: function(err) {
+            reject(err);
+         }
+      });
    });
 }
 
@@ -221,7 +211,6 @@ function openChatWindow(conn, room_node, room_title, user_jid, closeEvent, succe
          });
       },
       onMessageEvent: function (message) {
-         console.log(message);
          // library error work-a-round, else message repeats in multiple group.
          var _event__node = $(message).children('event').children('items').attr('node');
          if (_event__node !== CHAT_BOX.room_node) {
