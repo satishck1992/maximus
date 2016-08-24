@@ -19,24 +19,14 @@ function getUser() {
 }
 
 /**
- * Function to check whether user is authenticated to access page.
- * @return -> {Promise} based on success or error
+ * Function to set User Info
+ * @params :
+ * 1. user_name -> {String} Name of the User
+ * 2. user_role -> {String} Role of the User.
  */
-function isUserAuthenticated() {
-   return new Promise(function (fulfill, reject) {
-      var user_cookies = {
-         name: 'user_name',
-         role: 'user_role'
-      }
-
-      var user_name = getCookie(user_cookies.name);
-      var user_role = getCookie(user_cookies.role);
-
-      if (user_name && user_role) {
-         fulfill({ user_name: user_name, user_role: user_role });
-      }
-      reject();
-   });
+function setUser(user_name, user_role) {
+   setCookie('user_role', user_role, CONST['cookie-expirations']);
+   setCookie('user_name', user_name, CONST['cookie-expirations']);
 }
 
 /**
@@ -106,4 +96,25 @@ function logOutUser() {
    setCookie('user_role', '', -1);
    setCookie('user_name', '', -1);
    window.location.href = "login.html";
+}
+
+/**
+ * Function to check whether user is authenticated to access page.
+ * @return -> {Promise} based on success or error
+ */
+function isUserAuthenticated() {
+   return new Promise(function (fulfill, reject) {
+      var user_cookies = {
+         name: 'user_name',
+         role: 'user_role'
+      }
+
+      var user_name = getCookie(user_cookies.name);
+      var user_role = getCookie(user_cookies.role);
+
+      if (user_name && user_role) {
+         fulfill({ user_name: user_name, user_role: user_role });
+      }
+      reject();
+   });
 }

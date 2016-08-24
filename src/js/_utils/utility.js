@@ -67,3 +67,12 @@ function getBase64(file) {
 function redirectToPage(path) {
    window.location.href= path;
 }
+
+/**
+ * Function to Show error message.
+ * @params :
+ * 1. err_msg -> {String} Error message to be displayed.
+ */
+function showError(err_msg) {
+   Materialize.toast(err_msg, CONST.toast_time, 'error');
+}

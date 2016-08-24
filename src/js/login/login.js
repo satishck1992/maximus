@@ -1,37 +1,31 @@
 $('document').ready(function () {
    'use strict';
 
-   var CONST = {
-      "success_page": "news.html",
-      'user-msg': 'User not Found',
-      'cookie-expirations': 3,
-      'toast-time': 4000
-   }
+   getUser()
+      // user is present, redirect to admin page.
+      .then(function (success) {
+         redirectToPage(CONST.success_page);
+      })
+      // no user is present, initialize login form
+      .catch(function (fail) {
+         bindLoginEvt()
+      });
 
-   isUserAuthenticated().then(function (success) {
-      window.location.href = CONST.success_page;
-   }, function (failure) {
-      showForm();
-      bindSubmitEvent();
-   });
 
-   function showForm() {
-      $('.login-card').removeClass('hide');
-   }
-
-   function bindSubmitEvent() {
-      $('#login-form').submit(function (e) {
-         e.preventDefault();
+   function bindLoginEvt() {
+      $("#login-form").submit(function (ev) {
+         ev.preventDefault();
          var user_id = $("#user_name").val();
          var password = $("#password").val();
-         var isAuth = authenticateUser(user_id, password);
-         isAuth.then(function (user_info) {
-            setCookie('user_role', user_info.user_role, CONST['cookie-expirations']);
-            setCookie('user_name', user_id, CONST['cookie-expirations']);
-            window.location.href = CONST['success_page'];
-         }, function (error) {
-            Materialize.toast(CONST['user-msg'], CONST['toast-time'], 'error');
-         });
+
+         authenticateUser(user_id, password)
+            .then(function (user_data) {
+               setUser(user_data);
+               redirectToPage(CONST.success_page);
+            })
+            .catch(function (err) {
+               showError(err);
+            });
       });
    }
 });
