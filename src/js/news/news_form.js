@@ -22,17 +22,19 @@ $('document').ready(function () {
       .catch(function () { redirectToPage(CONST.login_page); });
 
    function initCreateForm() {
-      bindDraftBtn();
+      $('form').on('submit', saveNews);
+      $('.draft-btn').click(saveDraft);
     }
    function initEditForm(id) { }
    function initPreview(id) { }
-
-   function bindDraftBtn() {
-      $('.draft-btn').click(function(e) {
-         e.preventDefault();
-         saveDraftNews();
-      });
+   
+   function saveNews(ev) {
+      ev.preventDefault();
+      var formElement = document.querySelector("form");
+      var formData = new FormData(formElement);
+      console.log(formData);
    }
+   function saveDraft() {}
 
    // isUserAuthenticated().then(function (user_info) {
 

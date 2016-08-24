@@ -57,55 +57,55 @@
       <div class="container">
          <div class="row">
             <h4>News Form :</h4>
-            <form class="col s12">
+            <form class="col s12" enctype="multipart/form-data">
                <div class="row">
                   <div class="input-field col s6">
-                     <select id="news-sportstype">
+                     <select id="news-sportstype" name="sport_type">
                         <option value="" disabled selected>Choose a Sports</option>
                         <option value="c">Cricket</option>
                         <option value="f">Football</option>
                      </select>
                   </div>
                   <div class="input-field col s12">
-                     <input type="text" id="news-headline">
+                     <input type="text" id="news-headline" name="headline">
                      <label for="news-headline">Set a Headline</label>
                   </div>
                   <div class="input-field col s12">
-                     <input type="text" id="news-article-content">
+                     <input type="text" id="news-article-content" name="article_image_name">
                      <label for="news-article-content">Article Image Content</label>
                   </div>
                   <div class="file-field input-field col s12">
                      <div class="btn">
                         <span>File</span>
-                        <input type="file" id="news-article-image">
+                        <input type="file" id="news-article-image" name="article_image_content">
                      </div>
                      <div class="file-path-wrapper">
                         <input type="text" class="file-path validate" placeholder="Upload news headline Image">
                      </div>
                   </div>
                   <div class="input-field col s12">
-                     <textarea id="news-summary" class="materialize-textarea"></textarea>
+                     <textarea id="news-summary" class="materialize-textarea" name="article_content"></textarea>
                      <label for="news-summary">Summary</label>
                   </div>
                   <div class="input-field col s12">
-                     <input type="text" id="news-icebreaker">
+                     <input type="text" id="news-icebreaker" name="ice_breaker_name">
                      <label for="news-icebreaker">Icebreaker</label>
                   </div>
                   <div class="file-field input-field col s12">
                      <div class="btn">
                         <span>IceBreaker Image</span>
-                        <input type="file" id="ice-breaker-image">
+                        <input type="file" id="ice-breaker-image" name="ice_breaker_content">
                      </div>
                      <div class="file-path-wrapper">
                         <input type="text" class="file-path validate" placeholder="Upload Ice Breaker Image">
                      </div>
                   </div>
                   <div class="input-field col s12">
-                     <input type="text" id="news-pollquestion">
+                     <input type="text" id="news-pollquestion" name="poll_question">
                      <label for="news-pollquestion">Enter Poll Question</label>
                   </div>
                   <div class="input-field col s12">
-                     <input type="text" id="news-notification-content">
+                     <input type="text" id="news-notification-content" name="notification_content">
                      <label for="news-notification-content">Enter Notification Content</label>
                   </div>
                   <div class="input-field col s12">
