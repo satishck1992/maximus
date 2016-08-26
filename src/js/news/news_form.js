@@ -25,8 +25,21 @@ $('document').ready(function () {
       $('.draft-btn').click(saveDraft);
       $('form').on('submit', saveNews);
    }
-   function initEditForm(id) { }
+   function initEditForm(id) {
+      getSingleNews(id)
+         .then(function (news_obj) {
+            populateValues(news_obj);
+         })
+   }
    function initPreview(id) { }
+
+   function populateValues(news) {
+      console.log(news);
+      $('#news-sportstype').val(news.article_sport_type);
+      $('#news-headline').val(news.article_headline);
+      $('#article_content').val(news.article_content);
+      // $('#news-summary').val(news.)
+   }
 
    function getFormValues() {
       return new Promise(function (resolve, reject) {
@@ -44,8 +57,8 @@ $('document').ready(function () {
 
          var formValues = fields.map(function (val) {
             var new_val = {};
-            new_val.key= val.key;
-            new_val.value= $(val.id).val();
+            new_val.key = val.key;
+            new_val.value = $(val.id).val();
             if (val.type === 'image') {
                new_val.value = document.querySelector(val.id).files[0]
             }
@@ -53,23 +66,23 @@ $('document').ready(function () {
          });
 
          var formValueObj = {};
-         $.each(formValues, function(i, val) {
-            formValueObj[val.key]= val.value; 
+         $.each(formValues, function (i, val) {
+            formValueObj[val.key] = val.value;
          });
          // var formValueObj = toObject(formValues);
          getBase64(formValueObj['article_image_content'])
-         .then(function(base64Img) {
-            formValueObj['article_image_content']= 'data:image/png;base64,'+base64Img;
-            return getBase64(formValueObj['ice_breaker_content'])
-         })
-         .then(function(base64Img) {
-            formValueObj['ice_breaker_content']= 'data:image/png;base64,'+base64Img;
-            resolve(formValueObj);
-         })
-         .catch(function() {
-            console.log('catch/');
-            reject();
-         });
+            .then(function (base64Img) {
+               formValueObj['article_image_content'] = 'data:image/png;base64,' + base64Img;
+               return getBase64(formValueObj['ice_breaker_content'])
+            })
+            .then(function (base64Img) {
+               formValueObj['ice_breaker_content'] = 'data:image/png;base64,' + base64Img;
+               resolve(formValueObj);
+            })
+            .catch(function () {
+               console.log('catch/');
+               reject();
+            });
       });
    }
 
@@ -87,13 +100,13 @@ $('document').ready(function () {
       ev.preventDefault();
       getFormValues()
          .then(function (formValues) {
-            formValues.state= 'UnPublished';
-            formValues.publish_date= '08/07/91';
+            formValues.state = 'UnPublished';
+            formValues.publish_date = '08/07/91';
             createNews(formValues)
-               .then(function(success) {
-                  Materialize.toast('One more?'); 
+               .then(function (success) {
+                  Materialize.toast('One more?');
                })
-               .catch(function(err) {
+               .catch(function (err) {
                   console.log(err);
                })
             // var formData= formDataCreator(formValues);
