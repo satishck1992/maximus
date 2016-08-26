@@ -19,22 +19,89 @@ $('document').ready(function () {
             initPreview(id);
          }
       })
-      .catch(function () { redirectToPage(CONST.login_page); });
+      .catch(function (err) { redirectToPage(CONST.login_page); });
 
    function initCreateForm() {
-      $('form').on('submit', saveNews);
       $('.draft-btn').click(saveDraft);
-    }
+      $('form').on('submit', saveNews);
+   }
    function initEditForm(id) { }
    function initPreview(id) { }
-   
+
+   function getFormValues() {
+      return new Promise(function (resolve, reject) {
+         var fields = [
+            { key: 'headline', id: '#news-headline', type: 'text' },
+            { key: 'sport_type', id: '#news-sportstype', type: 'select' },
+            { key: 'article_image_content', id: '#news-article-image', type: 'image' },
+            { key: 'article_image_name', id: '#news-article-content', type: 'text' },
+            { key: 'article_content', id: '#news-summary', type: 'text' },
+            { key: 'ice_breaker_name', id: '#news-icebreaker', type: 'text' },
+            { key: 'ice_breaker_content', id: '#ice-breaker-image', type: 'image' },
+            { key: 'poll_question', id: '#news-pollquestion', type: 'text' },
+            { key: 'notification_content', id: '#news-notification-content', type: 'text' },
+         ];
+
+         var formValues = fields.map(function (val) {
+            var new_val = {};
+            new_val.key= val.key;
+            new_val.value= $(val.id).val();
+            if (val.type === 'image') {
+               new_val.value = document.querySelector(val.id).files[0]
+            }
+            return new_val;
+         });
+
+         var formValueObj = {};
+         $.each(formValues, function(i, val) {
+            formValueObj[val.key]= val.value; 
+         });
+         // var formValueObj = toObject(formValues);
+         getBase64(formValueObj['article_image_content'])
+         .then(function(base64Img) {
+            formValueObj['article_image_content']= 'data:image/png;base64,'+base64Img;
+            return getBase64(formValueObj['ice_breaker_content'])
+         })
+         .then(function(base64Img) {
+            formValueObj['ice_breaker_content']= 'data:image/png;base64,'+base64Img;
+            resolve(formValueObj);
+         })
+         .catch(function() {
+            console.log('catch/');
+            reject();
+         });
+      });
+   }
+
+   function formDataCreator(formValues) {
+      var formData = new FormData();
+      $.each(formValues, function (i, el) {
+         var key = el.key,
+            value = el.value;
+         formData.append(key, value);
+      });
+      return formData;
+   }
+
    function saveNews(ev) {
       ev.preventDefault();
-      var formElement = document.querySelector("form");
-      var formData = new FormData(formElement);
-      console.log(formData);
+      getFormValues()
+         .then(function (formValues) {
+            formValues.state= 'UnPublished';
+            formValues.publish_date= '08/07/91';
+            createNews(formValues)
+               .then(function(success) {
+                  Materialize.toast('One more?'); 
+               })
+               .catch(function(err) {
+                  console.log(err);
+               })
+            // var formData= formDataCreator(formValues);
+         })
+         .catch(function (err) { });
    }
-   function saveDraft() {}
+   function saveDraft() { }
+
 
    // isUserAuthenticated().then(function (user_info) {
 

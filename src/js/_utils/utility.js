@@ -86,3 +86,11 @@ function adminControl(user_role) {
       $(".only_admin").removeClass('hide');
    }
 }
+
+
+function toObject(arr) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    rv[i] = arr[i];
+  return rv;
+}
