@@ -22,7 +22,7 @@ $('document').ready(function () {
       .catch(function (err) {
          showError(err);
          // redirectToPage(CONST.login_page); 
-      });
+   });
 
    function initCreateForm() {
       $('form').on('submit', saveNews);

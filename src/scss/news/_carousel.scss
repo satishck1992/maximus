@@ -1,0 +1,10 @@
+.carousel-list {
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+   .carousel-item {
+      flex: 0 0 200px;
+      height: 120px;
+      background: white;
+   }
+}

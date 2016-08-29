@@ -365,3 +365,12 @@ main#add-user {
   height: 100%; }
   main#add-user .card {
     width: 600px; }
+
+.carousel-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around; }
+  .carousel-list .carousel-item {
+    flex: 0 0 200px;
+    height: 120px;
+    background: white; }

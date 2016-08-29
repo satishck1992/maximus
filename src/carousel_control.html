@@ -55,13 +55,36 @@
          <li class="hide only_admin"><a href="carousel_control.html" class="active">Carousel Control</a></li>
       </ul>
       <div class="content">
-                  
+         <ul id="carousel-list" class="carousel-list">
+            <li class="carousel-item">Item 1</li>
+            <li class="carousel-item">Item 2</li>
+            <li class="carousel-item">Item 3</li>
+            <li class="carousel-item">Item 4</li>
+         </ul>
+         <div class="news-table row">
+            <div class="col s12">
+               <table class="bordered striped">
+                  <thead>
+                     <tr>
+                        <th>S. no</th>
+                        <th data-field="sports_type">Sports Type</th>
+                        <th data-field="headline">Headline</th>
+                        <th data-field="published_date">Published Date</th>
+                        <th data-field="status">Status</th>
+                        <th data-field="actions">Actions</th>
+                     </tr>
+                  </thead>
+                  <tbody></tbody>
+               </table>
+            </div>
+         </div>
       </div>
    </main>
 
    <script src="../node_modules/es6-promise/dist/es6-promise.js"></script>
    <script src="../node_modules/jquery/dist/jquery.js"></script>
    <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
    <script src="js/_utils/CONST.js"></script>
    <script src="js/_utils/utility.js"></script>
    <script src="js/_utils/user.js"></script>
