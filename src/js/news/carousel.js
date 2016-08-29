@@ -7,14 +7,14 @@ $('document').ready(function () {
          var user_role = user_data.user_role;
 
          adminControl(user_role);
+         var list = document.getElementById("carousel-list");
+         Sortable.create(list); // That's all.         
 
          return fetchPublishedNews(user_name);
       })
       .then(function (published_news) {
          addToHTML(JSON.parse(published_news));
       
-         var list = document.getElementById("carousel-list");
-         Sortable.create(list); // That's all.         
       })
       .catch(function (err) {
          console.log(err);

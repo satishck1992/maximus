@@ -58,7 +58,7 @@ $('document').ready(function () {
          html += '<td>' + sports_key[news.article_sport_type] + '</td>';
          html += '<td>' + news.article_headline + '</td>';
          if(news.article_state === 'Published') {
-            html += '<td>' + news.publish_date + '</td>';
+            html += '<td>' + news.article_publish_date + '</td>';
          } else {
             html += '<td>Not Published</td>';
          }
@@ -76,7 +76,7 @@ $('document').ready(function () {
          var edit_btn = '<a href="/news_form.html?type=edit&news_id=' + news.article_id + '"><i class="material-icons">create</i></a>';
          var delete_btn = '<a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
          var publish_btn = '<a href="#" class="publish_icon"><i class="material-icons">android</i></a>';
-         if (news.article_state === 'draft') {
+         if (news.article_state === 'Draft') {
             html += preview_btn + edit_btn + delete_btn;
          } else if (news.article_state === 'UnPublished') {
             if (user_role === 'admin') { html += publish_btn; }
@@ -95,12 +95,23 @@ $('document').ready(function () {
    function deleteNewsEvt(ev) {
       ev.preventDefault();
       var newsRow = $(this).closest('tr');
-      askUser('Are you sure, you want to delete.. Check if news is present in Carousel?', function (userAnswer) {
+      askUser('Are you sure, you want to delete..', function (userAnswer) {
          if (userAnswer === true) {
             var newsId = newsRow.data('id');
-            deleteNews(newsId)
-               .then(function (success) {
-                  newsRow.remove();
+            deleteNews(newsId, false)
+               .then(function (in_carousel) {
+                  if(in_carousel=== false) {
+                     newsRow.remove();
+                  } else {
+                     askUser('news exist in carousel? It wil be deleted from carousel as well..', function(userAnswer) {
+                        if(userAnswer=== true) {
+                           deleteNews(nwesId, true)
+                              .then(function(success) {
+                                 newsRow.remove();
+                              })
+                        }
+                     });
+                  }
                })
                .catch(function (err) { showError(err); });
          }

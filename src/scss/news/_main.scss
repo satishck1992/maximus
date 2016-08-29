@@ -48,3 +48,48 @@ main#news {
       }
    }
 }
+
+#news {
+   background-color: #fff;
+   .news-table table {
+      border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+    border-top: 1px solid #e3e3e3;
+      th:first-child,
+      td:first-child {
+         width: 4rem;
+         text-align: center;
+      }
+      tr td:nth-child(4) {
+         color: rgba(0, 0, 0, .54);
+      }
+      tr[data-status="Published"] td:nth-child(4) {
+         color: rgba(0, 0, 0, 0.87);
+      }
+      tr[data-status="Published"] td:nth-child(5) {
+         color: #34a853;
+      }
+      tr[data-status="UnPublished"] td:nth-child(5) {
+         color: #ea4335;
+      }
+      tr[data-status="Draft"] td:nth-child(5) {
+         color: #fbbc05;
+      }
+   }
+   form,
+   h4 {
+      padding: 0 4rem;
+   }
+   .semi-card {
+      padding: 24px 12px;
+      background-color: #fff;
+      box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      .input-field {
+         width: 100%;
+      }
+   }
+}
+

@@ -10,7 +10,7 @@ function getNews(sports_type, news_status, user_name) {
    var queryString = createQueryString();
    return new Promise(function (fulfill, reject) {
       $.ajax({
-         url: 'http://54.169.217.88/fetch_articles?user_name=' + user_name + queryString,
+         url: 'http://54.169.217.88/fetch_articles?username=' + user_name + queryString,
          method: 'GET',
          success: function (response) {
             if (response.info === 'Success') {
@@ -41,7 +41,7 @@ function getNews(sports_type, news_status, user_name) {
 function getSingleNews(news_id) {
    return new Promise(function (fulfill, reject) {
       $.ajax({
-         url: 'http://54.169.217.88/edit_article?article_id=' + news_id,
+         url: 'http://54.169.217.88/get_article?article_id=' + news_id,
          method: 'GET',
          success: function (response) {
             if (response.info === 'Success') {
@@ -50,8 +50,7 @@ function getSingleNews(news_id) {
             reject('Some error occured in response.');
          },
          error: function (err) { reject(err); }
-      })
-      // fulfill({ id: 1, headline: 'Atque', sports_type: 'Cricket', date_time: 11100001212, status: 'draft' });
+      });
    });
 }
 
@@ -72,7 +71,7 @@ function publishNews(news_id) {
          },
          success: function (response) {
             if (response.info === 'Success') {
-               fulfill({ "publish_date": "23 08 2016", "article_sport_type": null, "article_id": 68, "article_headline": "test", "article_state": "Published" });
+               fulfill(response.article);
             }
 
             reject('Some error occured');
@@ -144,17 +143,18 @@ function editNews(news_id, formData) {
  * 1. news_id -> {String} Id of the news to be deleted.
  * @return promise
  */
-function deleteNews(news_id) {
+function deleteNews(news_id, force) {
    return new Promise(function (fulfill, reject) {
       $.ajax({
          url: 'http://54.169.217.88/delete_article',
          method: 'POST',
          data: {
-            'article_id': news_id
+            'article_id': news_id,
+            'force_delete': +force
          },
          success: function (response) {
             if (response.info === 'Success') {
-               fulfill();
+               fulfill(response.in_carousel);
             }
             reject('Some Error Occured.');
          },
