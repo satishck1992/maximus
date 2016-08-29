@@ -25,6 +25,8 @@ $('document').ready(function () {
       });
 
    function initCreateForm(user_name) {
+      $('.page-title').html('Add Form');
+      $('.submit-btn').html('Create News');
       $('#news-headline').characterCounter();
       $('form').on('submit', { username: user_name, state: 'UnPublished' }, saveNews);
       $('.draft-btn').on('click', { username: user_name, state: 'Draft' }, saveNews);
@@ -51,12 +53,19 @@ $('document').ready(function () {
    }
 
    function initEditForm(id) {
+      $('.page-title').html('Edit Form');
+      $('.submit-btn').html('Update News');
+      $('.draft-btn').hide();
       getSingleNews(id)
          .then(function (news_obj) {
             setFormValues(news_obj);
             Materialize.updateTextFields();
+            if(news_obj.article_state=== 'Draft') {
+               $('.draft-btn').html('Update Draft').show();
+            }
+            $('.draft-btn').on('click', { id: id, state: 'Draft' }, updateNews);
 
-            $('form').on('submit', { id: id }, updateNews);
+            $('form').on('submit', { id: id, state: 'UnPublished' }, updateNews);
          })
          .catch(function (err) {
             console.log(err);
@@ -67,17 +76,16 @@ $('document').ready(function () {
       var id = ev.data.id;
       ev.preventDefault();
       var fdata = formValues();
-      fdata.state = 'UnPublished';
-      fdata.publish_date = '08/07/91';
+      fdata.article_state = ev.data.state;
       editNews(id, fdata)
          .then(function (success) {
-            askUser('Would you like to add more news', function (userAnswer) {
-               if (!userAnswer) {
-                  redirectToPage("news.html");
-               } else {
-                  $('form')[0].reset();
-               }
-            });
+            redirectToPage("news.html");
+            // askUser('Would you like to add more news', function (userAnswer) {
+            //    if (!userAnswer) {
+            //    } else {
+            //       $('form')[0].reset();
+            //    }
+            // });
          })
          .catch(function (err) {
             showError(err);
@@ -110,6 +118,7 @@ $('document').ready(function () {
    }
 
    function initPreview(id) {
+      $('.page-title').html('Preview Form');
       getSingleNews(id)
          .then(function (news_obj) {
             setFormValues(news_obj);

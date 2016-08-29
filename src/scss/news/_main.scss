@@ -124,12 +124,12 @@ main#news {
    }
    form,
    h4 {
-      padding: 0 4rem;
+      // padding: 0 4rem;
    }
    .semi-card {
       padding: 24px 12px;
       background-color: #fff;
-      box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+      box-shadow: 0 -1px 0 #e5e5e5, 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -137,9 +137,29 @@ main#news {
          width: 100%;
       }
    }
+   h4 {
+      // color: #004d99;
+      font-weight: bold;
+   }
    form {
       .caret {
          z-index: 4;
+      }
+      h5  {
+         color: #004d99;
+         font-weight: bold;
+      }
+      .file-field .btn {
+         background-color: #ededed;
+         color: rgba(0, 0, 0, 0.87);
+         // box-shadow: none;
+         &:hover {
+            background-color: #ededed;
+         }
+      }
+      .file-field .file-path-wrapper {
+         padding-right: 20px;
+         padding-left: 0;
       }
       input.select-dropdown {
          border-radius: 3px;
@@ -149,6 +169,10 @@ main#news {
          border-color: rgb(177, 177, 177);
          border: 0;
          text-transform: uppercase;
+      }
+      .submit-btn,
+      .draft-btn {
+         background-color: #004d99;
       }
    }
 }
