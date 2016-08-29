@@ -363,7 +363,22 @@ main#news {
   #news .news-table table {
     border-left: 1px solid #e3e3e3;
     border-right: 1px solid #e3e3e3;
-    border-top: 1px solid #e3e3e3; }
+    border-top: 1px solid #e3e3e3;
+    font-family: 'Roboto'; }
+    #news .news-table table th:first-child {
+      width: 4%; }
+    #news .news-table table th:nth-child(2) {
+      width: 6%; }
+    #news .news-table table th:nth-child(3) {
+      width: 60%; }
+    #news .news-table table th:nth-child(4) {
+      width: 10%; }
+    #news .news-table table th:nth-child(5) {
+      width: 10%; }
+    #news .news-table table th:nth-child(6) {
+      width: 10%; }
+    #news .news-table table td:nth-child(3) {
+      font-weight: bold; }
     #news .news-table table th:first-child,
     #news .news-table table td:first-child {
       width: 4rem;
@@ -374,10 +389,21 @@ main#news {
       color: rgba(0, 0, 0, 0.87); }
     #news .news-table table tr[data-status="Published"] td:nth-child(5) {
       color: #34a853; }
-    #news .news-table table tr[data-status="UnPublished"] td:nth-child(5) {
-      color: #ea4335; }
-    #news .news-table table tr[data-status="Draft"] td:nth-child(5) {
-      color: #fbbc05; }
+    #news .news-table table td {
+      padding: 5px; }
+    #news .news-table table td.actions {
+      width: 180px; }
+      #news .news-table table td.actions a {
+        color: rgba(0, 0, 0, 0.87);
+        margin: 0 8px; }
+        #news .news-table table td.actions a.delete_icon {
+          color: #ff5252; }
+        #news .news-table table td.actions a.publish_icon {
+          color: #34a853; }
+        #news .news-table table td.actions a.preview_icon {
+          color: #fbbc05; }
+        #news .news-table table td.actions a.edit_icon {
+          color: #4285f4; }
   #news form,
   #news h4 {
     padding: 0 4rem; }
@@ -390,6 +416,16 @@ main#news {
     display: -ms-flexbox; }
     #news .semi-card .input-field {
       width: 100%; }
+  #news form .caret {
+    z-index: 4; }
+  #news form input.select-dropdown {
+    border-radius: 3px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18), 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+    padding: 0px 12px;
+    background-color: #ededed;
+    border-color: #b1b1b1;
+    border: 0;
+    text-transform: uppercase; }
 
 main#add-user {
   display: flex;

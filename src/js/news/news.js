@@ -72,15 +72,15 @@ $('document').ready(function () {
        */
       function getActionsOfNews(news, user_role) {
          var html = '';
-         var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.article_id + '" target="_blank"><i class="material-icons">visibility</i></a>';
-         var edit_btn = '<a href="/news_form.html?type=edit&news_id=' + news.article_id + '"><i class="material-icons">create</i></a>';
+         var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.article_id + '" target="_blank" class="preview_icon"><i class="material-icons">visibility</i></a>';
+         var edit_btn = '<a href="/news_form.html?type=edit&news_id=' + news.article_id + '" class="edit_icon"><i class="material-icons">create</i></a>';
          var delete_btn = '<a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
-         var publish_btn = '<a href="#" class="publish_icon"><i class="material-icons">android</i></a>';
+         var publish_btn = '<a href="#" class="publish_icon"><i class="material-icons">send</i></a>';
          if (news.article_state === 'Draft') {
-            html += preview_btn + edit_btn + delete_btn;
+            html += preview_btn + delete_btn + edit_btn;
          } else if (news.article_state === 'UnPublished') {
+            html += preview_btn + delete_btn + edit_btn;
             if (user_role === 'admin') { html += publish_btn; }
-            html += preview_btn + edit_btn + delete_btn;
          } else {
             html += preview_btn;
             if (user_role === 'admin') { html += delete_btn; }
