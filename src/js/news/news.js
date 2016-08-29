@@ -38,11 +38,19 @@ $('document').ready(function () {
    }
 
    function singleRow(i, news, user_role) {
+      var sports_key= {
+         'c': 'Cricket',
+         'f': 'Football'
+      }
       var html = '';
       html += '<td>' + i + '</td>';
-      html += '<td>' + news.article_sport_type + '</td>';
+      html += '<td>' + sports_key[news.article_sport_type] + '</td>';
       html += '<td>' + news.article_headline + '</td>';
-      html += '<td>' + news.publish_date + '</td>';
+      if(news.article_state === 'Published') {
+         html += '<td>' + news.publish_date + '</td>';
+      } else {
+         html += '<td>Not Published</td>';
+      }
       html += '<td>' + news.article_state + '</td>';
       html += '<td class="actions">' + getActionsOfNews(news, user_role) + '</td>';
       return html;

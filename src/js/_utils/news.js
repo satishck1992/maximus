@@ -41,15 +41,15 @@ function getNews(sports_type, news_status, user_name) {
 function getSingleNews(news_id) {
    return new Promise(function (fulfill, reject) {
       $.ajax({
-         url: 'http://54.169.217.88/edit_article?article_id='+news_id,
+         url: 'http://54.169.217.88/edit_article?article_id=' + news_id,
          method: 'GET',
-         success: function(response) {
-            if(response.info=== 'Success') {
+         success: function (response) {
+            if (response.info === 'Success') {
                fulfill(response.article);
             }
             reject('Some error occured in response.');
          },
-         error: function(err) {reject(err);}
+         error: function (err) { reject(err); }
       })
       // fulfill({ id: 1, headline: 'Atque', sports_type: 'Cricket', date_time: 11100001212, status: 'draft' });
    });
@@ -117,9 +117,24 @@ function createNews(formData) {
  * 2. form -> {HTML Element} Form containing new values.
  * @return promise
  */
-function editNews(news_id, form, status) {
+function editNews(news_id, formData) {
    return new Promise(function (fulfill, reject) {
-      fulfill({});
+      formData.article_id= +news_id;
+      console.log(formData);
+      $.ajax({
+         url: 'http://54.169.217.88/edit_article',
+         method: 'POST',
+         data: formData,
+         success: function (response) {
+            if (response.info === 'Success') {
+               fulfill();
+            }
+            reject();
+         },
+         error: function () {
+            reject();
+         }
+      });
    });
 }
 

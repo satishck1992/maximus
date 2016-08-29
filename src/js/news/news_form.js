@@ -19,101 +19,120 @@ $('document').ready(function () {
             initPreview(id);
          }
       })
-      .catch(function (err) { redirectToPage(CONST.login_page); });
+      .catch(function (err) {
+         showError(err);
+         // redirectToPage(CONST.login_page); 
+      });
 
    function initCreateForm() {
-      $('.draft-btn').click(saveDraft);
       $('form').on('submit', saveNews);
-   }
-   function initEditForm(id) {
-      getSingleNews(id)
-         .then(function (news_obj) {
-            populateValues(news_obj);
-         })
-   }
-   function initPreview(id) { }
-
-   function populateValues(news) {
-      console.log(news);
-      $('#news-sportstype').val(news.article_sport_type);
-      $('#news-headline').val(news.article_headline);
-      $('#article_content').val(news.article_content);
-      // $('#news-summary').val(news.)
-   }
-
-   function getFormValues() {
-      return new Promise(function (resolve, reject) {
-         var fields = [
-            { key: 'headline', id: '#news-headline', type: 'text' },
-            { key: 'sport_type', id: '#news-sportstype', type: 'select' },
-            { key: 'article_image_content', id: '#news-article-image', type: 'image' },
-            { key: 'article_image_name', id: '#news-article-content', type: 'text' },
-            { key: 'article_content', id: '#news-summary', type: 'text' },
-            { key: 'ice_breaker_name', id: '#news-icebreaker', type: 'text' },
-            { key: 'ice_breaker_content', id: '#ice-breaker-image', type: 'image' },
-            { key: 'poll_question', id: '#news-pollquestion', type: 'text' },
-            { key: 'notification_content', id: '#news-notification-content', type: 'text' },
-         ];
-
-         var formValues = fields.map(function (val) {
-            var new_val = {};
-            new_val.key = val.key;
-            new_val.value = $(val.id).val();
-            if (val.type === 'image') {
-               new_val.value = document.querySelector(val.id).files[0]
-            }
-            return new_val;
-         });
-
-         var formValueObj = {};
-         $.each(formValues, function (i, val) {
-            formValueObj[val.key] = val.value;
-         });
-         // var formValueObj = toObject(formValues);
-         getBase64(formValueObj['article_image_content'])
-            .then(function (base64Img) {
-               formValueObj['article_image_content'] = 'data:image/png;base64,' + base64Img;
-               return getBase64(formValueObj['ice_breaker_content'])
-            })
-            .then(function (base64Img) {
-               formValueObj['ice_breaker_content'] = 'data:image/png;base64,' + base64Img;
-               resolve(formValueObj);
-            })
-            .catch(function () {
-               console.log('catch/');
-               reject();
-            });
-      });
-   }
-
-   function formDataCreator(formValues) {
-      var formData = new FormData();
-      $.each(formValues, function (i, el) {
-         var key = el.key,
-            value = el.value;
-         formData.append(key, value);
-      });
-      return formData;
    }
 
    function saveNews(ev) {
       ev.preventDefault();
-      getFormValues()
-         .then(function (formValues) {
-            formValues.state = 'UnPublished';
-            formValues.publish_date = '08/07/91';
-            createNews(formValues)
-               .then(function (success) {
-                  Materialize.toast('One more?');
-               })
-               .catch(function (err) {
-                  console.log(err);
-               })
-            // var formData= formDataCreator(formValues);
+      var fdata = formValues();
+      fdata.state = 'UnPublished';
+      fdata.publish_date = '08/07/91';
+      createNews(fdata)
+         .then(function (success) {
+            askUser('Would you like to add more news', function (userAnswer) {
+               if (!userAnswer) {
+                  redirectToPage("news.html");
+               } else {
+                  $('form')[0].reset();
+               }
+            });
          })
-         .catch(function (err) { });
+         .catch(function (err) {
+            showError(err);
+         });
    }
-   function saveDraft() { }
+
+   function initEditForm(id) {
+      getSingleNews(id)
+         .then(function (news_obj) {
+            setFormValues(news_obj);
+            Materialize.updateTextFields();
+
+            $('form').on('submit', { id: id }, updateNews);
+         })
+         .catch(function (err) {
+            console.log(err);
+         });
+   }
+
+   function updateNews(ev) {
+      var id = ev.data.id;
+      ev.preventDefault();
+      var fdata = formValues();
+      fdata.state = 'UnPublished';
+      fdata.publish_date = '08/07/91';
+      editNews(id, fdata)
+         .then(function (success) {
+            askUser('Would you like to add more news', function (userAnswer) {
+               if (!userAnswer) {
+                  redirectToPage("news.html");
+               } else {
+                  $('form')[0].reset();
+               }
+            });
+         })
+         .catch(function (err) {
+            showError(err);
+         });
+   }
+
+   function formValues() {
+      var obj = {
+         'sport_type': $("#news-sportstype").val(),
+         'headline': $('#news-headline').val(),
+         'article_image_content': document.querySelector('#news-article-image').files[0].name,
+         // 'article_image_name': $('#news-article-content').val(),
+         'article_content': $('#news-summary').val(),
+         // 'ice_breaker_name': $('#news-icebreaker').val(),
+         'ice_breaker_content': document.querySelector('#ice-breaker-image').files[0].name,
+         'poll_question': $('#news-pollquestion').val(),
+         'notification_content': $('#news-notification-content').val()
+      }
+      return obj;
+   }
+
+   function setFormValues(values) {
+      $("#news-sportstype").val(values.article_sport_type);
+      $('#news-headline').val(values.article_headline);
+      $('#news-summary').val(values.article_content);
+      $('#news-icebreaker').val();
+      $('#news-pollquestion').val(values.article_poll_question);
+      $('#news-notification-content').val();
+      // document.querySelector('#ice-breaker-image').files[0].name;
+      // document.querySelector('#news-article-image').files[0].name;
+   }
+
+   // function initPreview(id) { }
+
+
+
+   // function populateValues(news) {
+   //    console.log(news);
+   //    $('#news-sportstype').val(news.article_sport_type);
+   //    $('#news-headline').val(news.article_headline);
+   //    $('#article_content').val(news.article_content);
+   //    // $('#news-summary').val(news.)
+   // }
+
+
+
+   // function formDataCreator(formValues) {
+   //    var formData = new FormData();
+   //    $.each(formValues, function (i, el) {
+   //       var key = el.key,
+   //          value = el.value;
+   //       formData.append(key, value);
+   //    });
+   //    return formData;
+   // }
+
+   // function saveDraft() { }
 
 
    // isUserAuthenticated().then(function (user_info) {
