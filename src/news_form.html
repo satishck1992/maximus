@@ -57,10 +57,10 @@
       <div class="container">
          <div class="row">
             <h4 class="page-title">Add News Form :</h4>
-            <form class="col s12" enctype="multipart/form-data">
+            <form id="news-form" class="col s12" enctype="multipart/form-data">
                <div class="row">
                   <div class="input-field col s2">
-                     <select id="news-sportstype" name="sport_type" required>
+                     <select id="article_sport_type" name="article_sport_type" required>
                         <option value="" disabled>Choose a Sports</option>
                         <option value="c">Cricket</option>
                         <option value="f">Football</option>
@@ -73,7 +73,7 @@
                      <div class="file-field input-field">
                         <div class="btn waves-effect right">
                            <span>Upload Header Image</span>
-                           <input type="file" id="news-article-image" name="article_image_content" required>
+                           <input type="file" id="article_image" name="article_image" required>
                         </div>
                         <div class="file-path-wrapper">
                            <input type="text" class="file-path validate" placeholder="Upload news headline Image">
@@ -85,8 +85,8 @@
                   <h5>Heading</h5>
                   <div class="semi-card col s8">
                      <div class="input-field">
-                        <input type="text" id="news-headline" name="headline" length="80" maxlength="80" required>
-                        <label for="news-headline">Set a Headline</label>
+                        <input type="text" id="article_headline" name="article_headline" length="80" maxlength="80" required>
+                        <label for="article_headline">Set a Headline</label>
                      </div>
                   </div>
                </div>
@@ -94,8 +94,8 @@
                   <h5>Summary</h5>
                   <div class="semi-card col s8">
                      <div class="input-field">
-                        <textarea id="news-summary" class="materialize-textarea" name="article_content" required></textarea>
-                        <label for="news-summary">Summary</label>
+                        <textarea id="article_content" class="materialize-textarea" name="article_content" required></textarea>
+                        <label for="article_content">Summary</label>
                      </div>
                   </div>
                </div>
@@ -105,7 +105,7 @@
                      <div class="file-field input-field">
                         <div class="btn waves-effect right">
                            <span>IceBreaker Image</span>
-                           <input type="file" id="ice-breaker-image" name="ice_breaker_content" required>
+                           <input type="file" id="article_ice_breaker_image" name="article_ice_breaker_image" required>
                         </div>
                         <div class="file-path-wrapper">
                            <input type="text" class="file-path validate" placeholder="Upload Ice Breaker Image">
@@ -117,8 +117,8 @@
                   <h5>Enter Poll Question</h5>
                   <div class="semi-card col s8">
                      <div class="input-field">
-                        <input type="text" id="news-pollquestion" name="poll_question" required>
-                        <label for="news-pollquestion">Enter Poll Question</label>
+                        <input type="text" id="article_poll_question" name="article_poll_question" required>
+                        <label for="article_poll_question">Enter Poll Question</label>
                      </div>
                   </div>
                </div>
@@ -126,10 +126,14 @@
                   <h5>Enter Notification Content</h5>
                   <div class="semi-card col s8">
                      <div class="input-field">
-                        <input type="text" id="news-notification-content" name="notification_content" required>
-                        <label for="news-notification-content">Enter Notification Content</label>
+                        <input type="text" id="article_notification_content" name="article_notification_content" required>
+                        <label for="article_notification_content">Enter Notification Content</label>
                      </div>
                   </div>
+               </div>
+               <div class="row">
+                  <input type="hidden" id="article_state" name="article_state" value="UnPublished">
+                  <input type="hidden" id="username" name="username" value="">
                </div>
                <div class="row">
                   <div class="input-field col s12">

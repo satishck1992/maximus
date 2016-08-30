@@ -90,19 +90,22 @@ function publishNews(news_id) {
  * 2. status -> {String} Status of the news setted. [draft/ unpublished]
  * @return promise
  */
-function createNews(formData) {
+function createNews() {
    return new Promise(function (fulfill, reject) {
       $.ajax({
          url: 'http://54.169.217.88/add_article',
          method: 'POST',
-         data: formData,
+         data: new FormData($("#news-form")[0]),
+         contentType: false,
+         processData: false,
          success: function (response) {
             if (response.info === 'Success') {
                fulfill();
             }
             reject();
          },
-         error: function () {
+         error: function (err) {
+            console.log(err);
             reject();
          }
       });
@@ -118,7 +121,7 @@ function createNews(formData) {
  */
 function editNews(news_id, formData) {
    return new Promise(function (fulfill, reject) {
-      formData.article_id= +news_id;
+      formData.article_id = +news_id;
       console.log(formData);
       $.ajax({
          url: 'http://54.169.217.88/edit_article',
@@ -166,17 +169,17 @@ function deleteNews(news_id, force) {
 }
 
 function fetchCarouselData() {
-   return new Promise(function(fulfill, reject) {
+   return new Promise(function (fulfill, reject) {
       $.ajax({
          url: 'http://54.169.217.88/get_carousel_articles',
          method: 'GET',
-         success: function(response) {
-            if(response.info=== 'Success') {
+         success: function (response) {
+            if (response.info === 'Success') {
                fulfill(response.articles);
             }
             reject(response.info);
          },
-         error: function(err) {
+         error: function (err) {
             reject(err);
          }
       })

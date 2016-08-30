@@ -28,19 +28,40 @@ $('document').ready(function () {
       $('.page-title').html('Add Form');
       $('.submit-btn').html('Create News');
       $('#news-headline').characterCounter();
-      $('form').on('submit', { username: user_name, state: 'UnPublished' }, saveNews);
-      $('.draft-btn').on('click', { username: user_name, state: 'Draft' }, saveNews);
+      $('form #username').val(user_name);
+      $('form').on('submit', saveNews);
+      $('.draft-btn').on('click', draftClicked);
+
+      function draftClicked(ev) {
+         $('form #article_state').val('Draft');
+         saveNews(ev);
+      }
+
+      // $('#news-article-image').on('change', openFile);
+      // var openFile = function (event) {
+      //    var input = event.target;
+
+      //    var reader = new FileReader();
+      //    reader.onload = function () {
+      //       var text = reader.result;
+      //       console.log(text);
+      //    };
+      //    reader.readAsText(input.files[0]);
+      // };
    }
 
    function saveNews(ev, state) {
       ev.preventDefault();
-      formValues()
-         .then(function (fdata) {
-            fdata.article_state = ev.data.state;
-            fdata.username = ev.data.username;
-            console.log(fdata);
-            return createNews(fdata);
-         })
+      createNews()
+      // formValues()
+      //    .then(function (fdata) {
+      //       // fdata.append('article_state', ev.data.state);
+      //       // fdata.append('username', ev.data.username);
+      //       // console.log(fdata);
+      //       // fdata.article_state = ev.data.state;
+      //       // fdata.username = ev.data.username;
+      //       return createNews(fdata);
+      //    })
          .then(function (success) {
             askUser('Would you like to add more news', function (userAnswer) {
                if (!userAnswer) {
@@ -97,7 +118,8 @@ $('document').ready(function () {
             .then(function (dataUrl) {
                getDataUrl('#ice-breaker-image')
                   .then(function (dataUrl2) {
-                     fulfill({dataUrl:dataUrl, dataUrl2:dataUrl2});
+                     console.log(dataUrl);
+                     fulfill({ dataUrl: dataUrl, dataUrl2: dataUrl2 });
                   });
             })
             .catch(function (err) {
@@ -109,20 +131,27 @@ $('document').ready(function () {
 
    function formValues() {
       return new Promise(function (fulfill, reject) {
-         dataUrlPromise()
-            .then(function (result) {
-               var obj = {
-                  'article_headline': $('#news-headline').val(),
-                  'article_image': result.dataUrl,
-                  // 'article_image': getArticleImage('#news-article-image'),
-                  'article_content': $('#news-summary').val(),
-                  'article_ice_breaker_image': result.dataUrl2,
-                  'article_poll_question': $('#news-pollquestion').val(),
-                  'article_notification_content': $('#news-notification-content').val(),
-                  'article_sport_type': $("#news-sportstype").val(),
-               }
-               fulfill(obj);
-            });
+         var formData = new FormData();
+         var obj = {
+            'article_headline': $('#news-headline').val() ? $('#news-headline').val() : '',
+            // 'article_image': $('input[type=file]#news-article-image')[0].files[0],
+            'article_image': '',
+            'article_content': $('#news-summary').val() ? $('#news-summary').val() : '',
+            // 'article_ice_breaker_image': $('input[type=file]#ice-breaker-image')[0].files[0],
+            'article_ice_breaker_image': 'x',
+            'article_poll_question': $('#news-pollquestion').val(),
+            'article_notification_content': $('#news-notification-content').val(),
+            'article_sport_type': $("#news-sportstype").val(),
+         }
+         for(var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+               formData.append(key, obj[key])
+            }
+         }
+         fulfill(formData);
+         // dataUrlPromise()
+         //    .then(function (result) {
+         //    });
       });
    }
 
