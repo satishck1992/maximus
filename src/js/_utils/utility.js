@@ -89,8 +89,29 @@ function adminControl(user_role) {
 
 
 function toObject(arr) {
-  var rv = {};
-  for (var i = 0; i < arr.length; ++i)
-    rv[i] = arr[i];
-  return rv;
+   var rv = {};
+   for (var i = 0; i < arr.length; ++i)
+      rv[i] = arr[i];
+   return rv;
+}
+
+
+
+function getDataUrl(input_id) {
+   return new Promise(function(fulfill) {
+      var file = document.querySelector(input_id).files[0];
+      var reader = new FileReader();
+      var dataUrl = '';
+
+      reader.addEventListener("load", function () {
+         dataUrl = reader.result;
+         fulfill(dataUrl);
+      });
+
+      if (file) {
+         reader.readAsDataURL(file);
+      } else {
+         fulfill('');
+      }
+   });
 }

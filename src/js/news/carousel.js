@@ -7,14 +7,24 @@ $('document').ready(function () {
          var user_role = user_data.user_role;
 
          adminControl(user_role);
-         var list = document.getElementById("carousel-list");
-         Sortable.create(list); // That's all.         
-
          return fetchPublishedNews(user_name);
       })
-      .then(function (published_news) {
-         addToHTML(JSON.parse(published_news));
-      
+      .then(function (carousel_data) {
+         var carousel= carousel_data.carousel;
+         var news_list= carousel_data.published;
+         addCarouselHtml(carousel);
+         addToHTML(news_list);
+         $('.add-carousel-btn').on('click', function(e) {
+            e.preventDefault();
+            var tr= $(this).closest('tr');
+            var id= tr.data('id');
+            addToCarousel(id);
+         });
+         $('.save-carousel').click(function(e) {
+            e.preventDefault();
+            saveCarousel()
+               .then
+         });
       })
       .catch(function (err) {
          console.log(err);
@@ -23,14 +33,32 @@ $('document').ready(function () {
    function fetchPublishedNews(user_name) {
       return new Promise(function (fulfill, reject) {
          var news_status = 'Published';
-         getNews('', news_status, user_name)
-            .then(function (news_list) {
-               fulfill(news_list);
+         fetchCarouselData()
+            .then(function(data) {
+               fulfill(data);
             })
-            .catch(function (err) {
-               reject('Could not fetch News.');
+            .catch(function(err) {
+               reject('Could not fetch Carousel data..');
             });
       });
+   }
+
+   function addCarouselHtml(list) {
+      var html= '';
+      $.each(list, function(i, item) {
+         html+= '<li>List Item</li>';
+      });
+      $("#carousel-list").html(html);
+      var list = document.getElementById("carousel-list");
+      Sortable.create(list); // That's all.
+   }
+
+   function addToCarousel(id) {
+      var html= '';
+      html+= '<li>'+id+'</li>';
+      $("#carousel-list").append(html);
+      var list = document.getElementById("carousel-list");
+      Sortable.create(list); // That's all.
    }
 
    /**
@@ -58,12 +86,12 @@ $('document').ready(function () {
          html += '<td>' + sports_key[news.article_sport_type] + '</td>';
          html += '<td>' + news.article_headline + '</td>';
          if (news.article_state === 'Published') {
-            html += '<td>' + news.publish_date + '</td>';
+            html += '<td>' + news.article_publish_date + '</td>';
          } else {
             html += '<td>Not Published</td>';
          }
-         html += '<td>' + news.article_state + '</td>';
-         html += '<td class="actions">Add to Carousel</td>';
+         html += '<td>Published</td>';
+         html += '<td class="actions"><a class="btn waves-effect add-carousel-btn" href="#">Add to Carousel</a></td>';
          return html;
       }
    }

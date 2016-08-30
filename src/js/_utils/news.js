@@ -164,3 +164,21 @@ function deleteNews(news_id, force) {
       })
    });
 }
+
+function fetchCarouselData() {
+   return new Promise(function(fulfill, reject) {
+      $.ajax({
+         url: 'http://54.169.217.88/get_carousel_articles',
+         method: 'GET',
+         success: function(response) {
+            if(response.info=== 'Success') {
+               fulfill(response.articles);
+            }
+            reject(response.info);
+         },
+         error: function(err) {
+            reject(err);
+         }
+      })
+   });
+}

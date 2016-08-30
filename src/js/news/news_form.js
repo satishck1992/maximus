@@ -21,7 +21,7 @@ $('document').ready(function () {
          }
       })
       .catch(function (err) {
-         showError(err); 
+         showError(err);
       });
 
    function initCreateForm(user_name) {
@@ -34,10 +34,13 @@ $('document').ready(function () {
 
    function saveNews(ev, state) {
       ev.preventDefault();
-      var fdata = formValues();
-      fdata.article_state = ev.data.state;
-      fdata.username = ev.data.username;
-      createNews(fdata)
+      formValues()
+         .then(function (fdata) {
+            fdata.article_state = ev.data.state;
+            fdata.username = ev.data.username;
+            console.log(fdata);
+            return createNews(fdata);
+         })
          .then(function (success) {
             askUser('Would you like to add more news', function (userAnswer) {
                if (!userAnswer) {
@@ -60,7 +63,7 @@ $('document').ready(function () {
          .then(function (news_obj) {
             setFormValues(news_obj);
             Materialize.updateTextFields();
-            if(news_obj.article_state=== 'Draft') {
+            if (news_obj.article_state === 'Draft') {
                $('.draft-btn').html('Update Draft').show();
             }
             $('.draft-btn').on('click', { id: id, state: 'Draft' }, updateNews);
@@ -73,36 +76,54 @@ $('document').ready(function () {
    }
 
    function updateNews(ev) {
-      var id = ev.data.id;
       ev.preventDefault();
-      var fdata = formValues();
-      fdata.article_state = ev.data.state;
-      editNews(id, fdata)
+      formValues()
+         .then(function (fdata) {
+            var id = ev.data.id;
+            fdata.article_state = ev.data.state;
+            return editNews(id, fdata);
+         })
          .then(function (success) {
             redirectToPage("news.html");
-            // askUser('Would you like to add more news', function (userAnswer) {
-            //    if (!userAnswer) {
-            //    } else {
-            //       $('form')[0].reset();
-            //    }
-            // });
          })
          .catch(function (err) {
             showError(err);
          });
    }
 
+   function dataUrlPromise() {
+      return new Promise(function (fulfill, reject) {
+         getDataUrl('#news-article-image')
+            .then(function (dataUrl) {
+               getDataUrl('#ice-breaker-image')
+                  .then(function (dataUrl2) {
+                     fulfill({dataUrl:dataUrl, dataUrl2:dataUrl2});
+                  });
+            })
+            .catch(function (err) {
+               showError(err);
+               reject();
+            });
+      });
+   }
+
    function formValues() {
-      var obj = {
-         'article_headline': $('#news-headline').val(),
-         'article_image': document.querySelector('#news-article-image').files.length ? document.querySelector('#news-article-image').files[0].name : '',
-         'article_content': $('#news-summary').val(),
-         'article_ice_breaker_image': document.querySelector('#ice-breaker-image').files.length ? document.querySelector('#ice-breaker-image').files[0].name : '',
-         'article_poll_question': $('#news-pollquestion').val(),
-         'article_notification_content': $('#news-notification-content').val(),
-         'article_sport_type': $("#news-sportstype").val(),
-      }
-      return obj;
+      return new Promise(function (fulfill, reject) {
+         dataUrlPromise()
+            .then(function (result) {
+               var obj = {
+                  'article_headline': $('#news-headline').val(),
+                  'article_image': result.dataUrl,
+                  // 'article_image': getArticleImage('#news-article-image'),
+                  'article_content': $('#news-summary').val(),
+                  'article_ice_breaker_image': result.dataUrl2,
+                  'article_poll_question': $('#news-pollquestion').val(),
+                  'article_notification_content': $('#news-notification-content').val(),
+                  'article_sport_type': $("#news-sportstype").val(),
+               }
+               fulfill(obj);
+            });
+      });
    }
 
    function setFormValues(values) {
