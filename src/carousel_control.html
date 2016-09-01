@@ -48,20 +48,41 @@
       </ul>
    </header>
 
-   <main id="news">
+   <main id="news" class="carousel">
       <ul class="secondary-menu">
          <li><a href="news.html">All News</a></li>
          <li><a href="/news_form.html?type=add">News Form</a></li>
          <li class="hide only_admin"><a href="carousel_control.html" class="active">Carousel Control</a></li>
       </ul>
       <div class="content">
-         <ul id="carousel-list" class="carousel-list">
-            <li class="carousel-item">Item 1</li>
-            <li class="carousel-item">Item 2</li>
-            <li class="carousel-item">Item 3</li>
-            <li class="carousel-item">Item 4</li>
-         </ul>
-         <a href="#" class="btn waves-effect save-carousel">Save Carousel</a>
+         
+         <div class="carousel-wrapper">
+            <div class="container">
+               <div class="row">
+                  <div class="col s2 add-btn-col">
+                     <a href="/news_form.html?type=add" class="btn add-btn">
+                        <i class="material-icons">add</i>
+                     </a>
+                     <span>Create news</span>
+                  </div>
+                  <div class="col s10 carousel-col">
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                     <div class="nothing"></div>
+                  </div>
+               </div>
+               <a href="#" class="btn waves-effect save-carousel right">Save Carousel</a>
+            </div>
+         </div>
+
+         
          <div class="news-table row">
             <div class="col s12">
                <table class="bordered striped">
@@ -71,7 +92,6 @@
                         <th data-field="sports_type">Sports Type</th>
                         <th data-field="headline">Headline</th>
                         <th data-field="published_date">Published Date</th>
-                        <th data-field="status">Status</th>
                         <th data-field="actions">Actions</th>
                      </tr>
                   </thead>

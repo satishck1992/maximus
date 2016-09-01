@@ -185,3 +185,33 @@ function fetchCarouselData() {
       })
    });
 }
+
+
+var NewsAPI = {
+    getNews: function (sports_type, news_status, user_name) {
+        return new Promise(function (fulfill, reject) {
+            var queryString = createQueryString();
+            $.ajax({
+                url: 'http://54.169.217.88/fetch_articles?username=' + user_name + queryString,
+                method: 'GET',
+                success: function (response) {
+                    if (response.info === 'Success') {
+                        var articles= JSON.parse(response.articles);
+                        fulfill(articles);
+                    }
+                    reject(response.info);
+                },
+                error: function () {
+                    reject('Could not Fetch News List.');
+                }
+            });
+        });
+
+        function createQueryString() {
+            var string = '';
+            if (sports_type) { string += '&article_sport_type=' + sports_type; }
+            if (news_status) { string += '&article_state=' + news_status; }
+            return string;
+        }
+    }
+}

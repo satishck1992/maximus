@@ -121,3 +121,30 @@ function getDataUrl(input_id) {
       }
    });
 }
+
+var Utils = {
+    adminControl: function (user_role) {
+        if (user_role === 'admin') {
+            $(".only_admin").removeClass('hide');
+        }
+    },
+    askUser: function (msg, response) {
+        var userAnswer = confirm(msg);
+        response(userAnswer);
+    },
+    runPageStartup: function (user_role) {
+        this.adminControl(user_role);
+        $('select').material_select();
+    },
+    showError: function (err_msg) {
+        Materialize.toast(err_msg, CONST.toast_time, 'error');
+    },
+    showLoading: function () {
+
+        $('#loader').openModal();
+
+    },
+    hideLoading: function() {
+        $('#loader').closeModal();
+    }
+}

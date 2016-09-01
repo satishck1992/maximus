@@ -1,13 +1,6 @@
 .side-nav.fixed {
    width: 240px;
    li {
-      a {
-         color: #6a6c6f;
-         font-family: 'Merriweather Sans', sans-serif;
-         i {
-            margin-right: 12px;
-         }
-      }
       &:hover {
          a,
          i {
@@ -24,14 +17,16 @@
       }
    }
    li.logo {
-      line-height: 100px;
+      background-color: #fcfcfc;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
       a {
-         height: 100px;
-         line-height: 100px;
+         height: 96px;
          font-size: 1.8rem;
          font-weight: bold;
+         text-transform: uppercase;
          color: $brand-color;
-         font-family: 'Inconsolata';
          text-align: center;
       }
    }

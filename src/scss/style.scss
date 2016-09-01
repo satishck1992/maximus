@@ -9,20 +9,6 @@ body {
   background: #f5f5f5;
 }
 
-body {
-   font-family: 'Merriweather Sans', sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.title {
-   font-family: 'Inconsolata';
-} 
-
 *::-webkit-scrollbar-track {
   background: rgba(255,255,255,.08);
 }
@@ -70,5 +56,23 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
    color: #004d99;
 }
+input:disabled:not([type]), input[readonly="readonly"]:not([type]), input[type="text"]:disabled, input[type="text"][readonly="readonly"], input[type="password"]:disabled, input[type="password"][readonly="readonly"], input[type="email"]:disabled, input[type="email"][readonly="readonly"], input[type="url"]:disabled, input[type="url"][readonly="readonly"], input[type="time"]:disabled, input[type="time"][readonly="readonly"], input[type="date"]:disabled, input[type="date"][readonly="readonly"], input[type="datetime"]:disabled, input[type="datetime"][readonly="readonly"], input[type="datetime-local"]:disabled, input[type="datetime-local"][readonly="readonly"], input[type="tel"]:disabled, input[type="tel"][readonly="readonly"], input[type="number"]:disabled, input[type="number"][readonly="readonly"], input[type="search"]:disabled, input[type="search"][readonly="readonly"], textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"] {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #004d99;
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+    background: #3e78b2;
+}
+
+::selection {
+    color: #fff;
+    background: #3e78b2;
+}
+
 
 @import 'news/carousel';

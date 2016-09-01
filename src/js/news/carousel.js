@@ -7,12 +7,12 @@ $('document').ready(function () {
          var user_role = user_data.user_role;
 
          adminControl(user_role);
-         return fetchPublishedNews(user_name);
+         return fetchCarouselData(user_name);
       })
       .then(function (carousel_data) {
          var carousel= carousel_data.carousel;
          var news_list= carousel_data.published;
-         addCarouselHtml(carousel);
+         // addCarouselHtml(carousel);
          addToHTML(news_list);
          $('.add-carousel-btn').on('click', function(e) {
             e.preventDefault();

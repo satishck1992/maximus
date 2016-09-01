@@ -3,18 +3,38 @@ $('document').ready(function () {
 
    getUser()
       .then(function (user_data) {
-         var user_name = user_data.user_name;
-         var user_role = user_data.user_role;
-
-         adminControl(user_role);
-         $('select').material_select();
-
-         displayNews(user_name, user_role);
-         $('select').change(function (ev) { displayNews(user_name, user_role); });
-         $('.news-table tbody').on("click", "td.actions a.delete_icon", deleteNewsEvt);
-         $('.news-table tbody').on("click", "td.actions a.publish_icon", { user_role: user_role }, publishNewsEvt);
+         Utils.runPageStartup(user_data.user_role);
+         return showNews(user_data.user_name, user_data.user_role);
       })
-      .catch(function () { redirectToPage(CONST.login_page); });
+      .then(function (user_data) {
+         var table = createDataTable();
+         $('select').change(function (ev) {
+            table.destroy();
+            showNews(user_data.user_name, user_data.user_role)
+               .then(function () {
+                  table = createDataTable();
+               });
+         });
+         $('.news-table tbody').on("click", "td.actions a.delete_icon", deleteNewsEvt);
+         $('.news-table tbody').on("click", "td.actions a.publish_icon", { user_role: user_data.user_role }, publishNewsEvt);
+         $('input#filter_search_headline').on('keyup click', function () {
+            $('.news-table table').DataTable().column(2).search(
+               $('input#filter_search_headline').val(), true, true
+            ).draw();
+         });
+      })
+      .catch(function (err) {
+         Utils.showError(err); 
+         console.log(err);
+         redirectToPage(CONST.login_page);
+      });
+
+   function createDataTable() {
+      return $('.news-table table').DataTable({
+         paging: false,
+         "info": false,
+      });
+   }
 
    /**
     * Fn to display News in News page.
@@ -22,33 +42,39 @@ $('document').ready(function () {
     * user_name -> {String} User name for which news to be fetched.
     * user_role -> {string} Role of the user logged in.
     */
-   function displayNews(user_name, user_role) {
-      var sports_type = $("#filter-sportsType").val();
-      var news_status = $("#filter-newsStatusType").val();
-
-      getNews(sports_type, news_status, user_name)
-         .then(function (news_list) {
-            addToHTML(JSON.parse(news_list), user_role);
-         })
-         .catch(function (err) { showError(err); });
-
-      /**
-       * Function to add List of news to be table.
-       */
-      function addToHTML(list_of_news, user_role) {
-         var html = '';
-         $.each(list_of_news, function (i, news) {
-            html += '<tr data-status="' + news.article_state + '" data-id="' + news.article_id + '">';
-            html += singleRow(i + 1, news, user_role);
-            html += '</tr>';
-         });
-         $('.news-table tbody').html(html);
+   function showNews(user_name, user_role) {
+      return new Promise(function (fulfill, reject) {
+         var filters = getFilterDropdownValues();
+         NewsAPI.getNews(filters.sports_type, filters.news_status, user_name)
+            .then(function (news_list) {
+               displayHTML(news_list, user_role);
+               fulfill({ user_name: user_name, user_role: user_role });
+            })
+            .catch(function (err) {
+               reject(err);
+            });
+      });
+      function getFilterDropdownValues() {
+         return {
+            sports_type: $("#filter-sportsType").val(),
+            news_status: $("#filter-newsStatusType").val()
+         };
       }
    }
 
    /**
           * Fn to make html for a single row.
           */
+   function displayHTML(news_list, user_role) {
+      var html = '';
+      $.each(news_list, function (i, news) {
+         html += '<tr data-status="' + news.article_state + '" data-id="' + news.article_id + '">';
+         html += singleRow(i + 1, news, user_role);
+         html += '</tr>';
+      });
+      $('.news-table tbody').html(html);
+   }
+
    function singleRow(i, news, user_role) {
       var sports_key = {
          'c': 'Cricket',
@@ -73,7 +99,7 @@ $('document').ready(function () {
     */
    function getActionsOfNews(news, user_role) {
       var html = '';
-      var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.article_id + '" target="_blank" class="preview_icon"><i class="material-icons">visibility</i></a>';
+      var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.article_id + '" class="preview_icon"><i class="material-icons">visibility</i></a>';
       var edit_btn = '<a href="/news_form.html?type=edit&news_id=' + news.article_id + '" class="edit_icon"><i class="material-icons">create</i></a>';
       var delete_btn = '<a href="#" class="delete_icon"><i class="material-icons">delete_forever</i></a>';
       var publish_btn = '<a href="#" class="publish_icon"><i class="material-icons">send</i></a>';
@@ -88,13 +114,16 @@ $('document').ready(function () {
       }
       return html;
    }
+
+
+
    /**
     * Event when delete action item is clicked.
     */
    function deleteNewsEvt(ev) {
       ev.preventDefault();
       var newsRow = $(this).closest('tr');
-      askUser('Are you sure, you want to delete..', function (userAnswer) {
+      Utils.askUser('Are you sure, you want to delete..', function (userAnswer) {
          if (userAnswer === true) {
             var newsId = newsRow.data('id');
             deleteNews(newsId, false)
@@ -104,7 +133,7 @@ $('document').ready(function () {
                   } else {
                      askUser('news exist in carousel? It wil be deleted from carousel as well..', function (userAnswer) {
                         if (userAnswer === true) {
-                           deleteNews(nwesId, true)
+                           deleteNews(newsId, true)
                               .then(function (success) {
                                  newsRow.remove();
                               })
@@ -112,7 +141,9 @@ $('document').ready(function () {
                      });
                   }
                })
-               .catch(function (err) { showError(err); });
+               .catch(function (err) {
+                  showError(err);
+               });
          }
       });
    }
