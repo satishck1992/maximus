@@ -17,14 +17,14 @@ $('document').ready(function () {
          loadTable(tableData);
          initializeSortableList();
 
-         $('.save-carousel').click(function(e) {
+         $('.save-carousel').click(function (e) {
             e.preventDefault();
-            var carouselJson= getCarouselJson();
+            var carouselJson = getCarouselJson();
             NewsAPI.postCarousel(carouselJson)
-               .then(function() {
+               .then(function () {
                   Materialize.toast('done');
                })
-               .catch(function(err) {
+               .catch(function (err) {
                   Utils.showError(err);
                });
          });
@@ -64,7 +64,7 @@ $('document').ready(function () {
       });
       var carouselJsonList = sortedList.map(function (obj, i) {
          var op = createCarouselObject(obj.article_id, news_list);
-         op.position = obj.priority+1;
+         op.position = obj.priority + 1;
          return op;
       });
       return carouselJsonList;
@@ -206,8 +206,8 @@ $('document').ready(function () {
     * Function to update Prioirty/Sorting Number to Carousel Boxes
     */
    function updatePriorityNumber() {
-      $('.carousel-box').each(function(i, el) {
-         $(el).find('.number').html(i+1);
+      $('.carousel-box').each(function (i, el) {
+         $(el).find('.number').html(i + 1);
       });
    }
 
@@ -215,12 +215,12 @@ $('document').ready(function () {
     * Function to create Carousel JSON to be submitted
     */
    function getCarouselJson() {
-      var op= {articles: {}};
-      $('.carousel-box').each(function(i, el) {
-         var id= $(el).data('id');
-         op.articles[i]= id;
+      var op = { articles: {} };
+      $('.carousel-box').each(function (i, el) {
+         var id = $(el).data('id');
+         op.articles[i] = id;
       });
-      op.articles= JSON.stringify(op.articles);
+      op.articles = JSON.stringify(op.articles);
       return op;
    }
 });

@@ -205,19 +205,19 @@ var NewsAPI = {
          })
       });
    },
-   postCarousel: function(data) {
-      return new Promise(function(fulfill, reject) {
+   postCarousel: function (data) {
+      return new Promise(function (fulfill, reject) {
          $.ajax({
             url: 'http://54.169.217.88/post_carousel_articles',
             method: 'POST',
             data: data,
-            success: function(response) {
-               if(response.info=== 'Success') {
+            success: function (response) {
+               if (response.info === 'Success') {
                   fulfill();
                }
                reject(response.info);
             },
-            error: function(err) {
+            error: function (err) {
                reject(err);
             }
          })
