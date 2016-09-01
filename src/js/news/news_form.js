@@ -85,16 +85,15 @@ $('document').ready(function () {
 
    function updateNews(ev) {
       ev.preventDefault();
-      formValues()
-         .then(function (fdata) {
-            var id = ev.data.id;
-            fdata.article_state = ev.data.state;
-            return editNews(id, fdata);
-         })
+      Utils.showLoading();
+      var id = ev.data.id;
+      NewsAPI.editNews(id)
          .then(function (success) {
+            Utils.hideLoading();
             redirectToPage("news.html");
          })
          .catch(function (err) {
+            Utils.hideLoading();
             showError(err);
          });
    }
@@ -144,10 +143,13 @@ $('document').ready(function () {
 
    function setFormValues(values) {
       $("#article_sport_type").val(values.article_sport_type);
-            $('#article_headline').val(values.article_headline);
-            $('#article_content').val(values.article_content);
-            $('#article_poll_question').val(values.article_poll_question);
-            $('#article_notification_content').val(values.article_notification_content);
+      $('#article_headline').val(values.article_headline);
+      $('#article_content').val(values.article_content);
+      $('#article_poll_question').val(values.article_poll_question);
+      $('#article_notification_content').val(values.article_notification_content);
+
+      $('#article_content').trigger('autoresize');
+
 
       $('select').material_select();
       $("#article_image_file_preview").attr('src', values.article_image).removeClass('hide');

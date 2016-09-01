@@ -50,6 +50,12 @@ main#news {
 }
 
 #news {
+   table.dataTable.no-footer {
+      border-color: #e3e3e3;
+   }
+   table.dataTable thead th, table.dataTable thead td {
+      border-color: #e3e3e3;
+   }
    #DataTables_Table_0_filter {
     display: none;
   }
@@ -106,7 +112,7 @@ main#news {
          // color: #fbbc05;
       }
       td {
-         padding: 5px;
+         padding: 3px 18px;
       }
       td.actions {
          width: 180px;
@@ -136,6 +142,7 @@ main#news {
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
+      flex-direction: column;
       .input-field {
          width: 100%;
       }

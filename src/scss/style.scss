@@ -76,3 +76,12 @@ input:disabled:not([type]), input[readonly="readonly"]:not([type]), input[type="
 
 
 @import 'news/carousel';
+
+#loader {
+   overflow: hidden;
+    height: 70px;
+    width: 70px;
+    display: flex!important;
+    align-items: center;
+    justify-content: center;
+}

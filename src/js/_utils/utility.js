@@ -147,9 +147,9 @@ var Utils = {
       Materialize.toast(err_msg, CONST.toast_time, 'error');
    },
    showLoading: function () {
-
-      $('#loader').openModal();
-
+      $('#loader').openModal({
+         dismissible: false,
+      });
    },
    hideLoading: function () {
       $('#loader').closeModal();

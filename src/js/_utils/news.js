@@ -119,26 +119,7 @@ function createNews() {
  * 2. form -> {HTML Element} Form containing new values.
  * @return promise
  */
-function editNews(news_id, formData) {
-   return new Promise(function (fulfill, reject) {
-      formData.article_id = +news_id;
-      console.log(formData);
-      $.ajax({
-         url: 'http://54.169.217.88/edit_article',
-         method: 'POST',
-         data: formData,
-         success: function (response) {
-            if (response.info === 'Success') {
-               fulfill();
-            }
-            reject();
-         },
-         error: function () {
-            reject();
-         }
-      });
-   });
-}
+
 
 /**
  * Function to delete News Item
@@ -184,6 +165,28 @@ var NewsAPI = {
             },
             error: function () {
                reject('Could not Fetch News List.');
+            }
+         });
+      });
+   },
+   editNews: function (news_id) {
+      return new Promise(function (fulfill, reject) {
+         var formData= new FormData($("#news-form")[0]);
+         formData.append('article_id', news_id);
+         $.ajax({
+            url: 'http://54.169.217.88/edit_article',
+            method: 'POST',
+            data: formData,
+            success: function (response) {
+               console.log(response);
+               if (response.info === 'Success') {
+                  fulfill();
+               }
+               reject();
+            },
+            error: function (err) {
+               console.log(err);
+               reject();
             }
          });
       });
