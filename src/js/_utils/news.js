@@ -168,50 +168,66 @@ function deleteNews(news_id, force) {
    });
 }
 
-function fetchCarouselData() {
-   return new Promise(function (fulfill, reject) {
-      $.ajax({
-         url: 'http://54.169.217.88/get_carousel_articles',
-         method: 'GET',
-         success: function (response) {
-            if (response.info === 'Success') {
-               fulfill(response.articles);
+var NewsAPI = {
+   getNews: function (sports_type, news_status, user_name) {
+      return new Promise(function (fulfill, reject) {
+         var queryString = createQueryString(sports_type, news_status);
+         $.ajax({
+            url: 'http://54.169.217.88/fetch_articles?username=' + user_name + queryString,
+            method: 'GET',
+            success: function (response) {
+               if (response.info === 'Success') {
+                  var articles = JSON.parse(response.articles);
+                  fulfill(articles);
+               }
+               reject(response.info);
+            },
+            error: function () {
+               reject('Could not Fetch News List.');
             }
-            reject(response.info);
-         },
-         error: function (err) {
-            reject(err);
-         }
-      })
-   });
+         });
+      });
+   },
+   fetchCarousels: function () {
+      return new Promise(function (fulfill, reject) {
+         $.ajax({
+            url: 'http://54.169.217.88/get_carousel_articles',
+            method: 'GET',
+            success: function (response) {
+               if (response.info === 'Success') {
+                  fulfill(response.articles);
+               }
+               reject(response.info);
+            },
+            error: function (err) {
+               reject(err);
+            }
+         })
+      });
+   },
+   postCarousel: function(data) {
+      return new Promise(function(fulfill, reject) {
+         $.ajax({
+            url: 'http://54.169.217.88/post_carousel_articles',
+            method: 'POST',
+            data: data,
+            success: function(response) {
+               if(response.info=== 'Success') {
+                  fulfill();
+               }
+               reject(response.info);
+            },
+            error: function(err) {
+               reject(err);
+            }
+         })
+      });
+   }
 }
 
-
-var NewsAPI = {
-    getNews: function (sports_type, news_status, user_name) {
-        return new Promise(function (fulfill, reject) {
-            var queryString = createQueryString();
-            $.ajax({
-                url: 'http://54.169.217.88/fetch_articles?username=' + user_name + queryString,
-                method: 'GET',
-                success: function (response) {
-                    if (response.info === 'Success') {
-                        var articles= JSON.parse(response.articles);
-                        fulfill(articles);
-                    }
-                    reject(response.info);
-                },
-                error: function () {
-                    reject('Could not Fetch News List.');
-                }
-            });
-        });
-
-        function createQueryString() {
-            var string = '';
-            if (sports_type) { string += '&article_sport_type=' + sports_type; }
-            if (news_status) { string += '&article_state=' + news_status; }
-            return string;
-        }
-    }
+function createQueryString(sports_type, news_status) {
+   var string = '';
+   if (sports_type) { string += '&article_sport_type=' + sports_type; }
+   if (news_status) { string += '&article_state=' + news_status; }
+   return string;
 }

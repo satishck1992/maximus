@@ -1,66 +1,93 @@
-.carousel-list {
-   display: flex;
-   align-items: center;
-   justify-content: space-around;
-   .carousel-item {
-      flex: 0 0 200px;
-      height: 120px;
-      background: white;
+main#news.carousel .content .carousel-wrapper {
+   background-color: #394242;
+   min-height: 200px;
+   .row {
+      margin-bottom: 0;
+   }
+   .info-col {
+      color: #fff;
+      text-align: center;
+      span {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 160px;
+         width: 100%;
+         padding: 24px;
+         background-color: rgba(255, 255, 255, 0.87);
+         color: rgba(0, 0, 0, 0.54);
+         font-weight: bold;
+      }
+   }
+   .carousel_list_col {
+      display: flex;
+      flex-wrap: wrap;
+      .carousel-box {
+         width: 18%;
+         margin-left: 1%;
+         margin-right: 1%;
+         margin-bottom: 12px;
+         height: 160px;
+         .image {
+            height: 150px;
+            position: relative;
+            .banner {
+               width: 0;
+               height: 0;
+               border-style: solid;
+               border-width: 45px 45px 0 0;
+               border-color: #ec5d2f transparent transparent transparent;
+               .number {
+                  position: absolute;
+                  top: 6px;
+                  left: 6px;
+                  color: #fff;
+               }
+               i {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  color: #fff;
+                  cursor: pointer;
+               }
+            }
+         }
+         .carousel-headline {
+            color: #fff;
+            font-weight: bold;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+         }
+      }
    }
 }
 
-.carousel-container {
-       display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 300px;
-    background-color: #394242;
-    .add-news__link {
-      background-color: white;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 200px;
-      i {
-         font-size: 6rem;
-         color: #004d99;
-      }
-    }
-}
 
 main#news.carousel .content {
-   padding: 0;
-   .carousel-wrapper {
-      background-color: #394242;
-      height: 480px;
-      .add-btn-col {
-         color: #fff;
-         a.btn {
-            margin-top: 8px;
-            margin-bottom: 4px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 345px;
-            background-color: #fff;
-            i {
-               font-size: 6rem;
+   .save-carousel {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      background: #004d99;
+      font-weight: bold;
+   }
+   .carousel-table {
+      .actions {
+         a {
+            margin: 0;
+            // font-size: 0.8rem;
+            padding-left: 0;
+            padding-right: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+            &.add-carousel-btn {
                color: #004d99;
             }
-         }
-      }
-      .carousel-col {
-         display: flex;
-         justify-content: space-around;
-         flex-wrap: wrap;
-         div {
-            margin: 1%;
-            flex: 0 0 18%;
-            height: 160px;
-            background-color: #fff;
-            &.nothing {
-               background-color: #6b6b6b;
+            &.remove-carousel-btn {
+               color: #ec5d2f;
+            }
+            &:hover {
+               background-color: transparent;
             }
          }
       }

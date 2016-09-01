@@ -123,6 +123,13 @@ function getDataUrl(input_id) {
 }
 
 var Utils = {
+   searchList: function(list, key, value) {
+      return list.filter(function(val, i) {
+         if(val[key]=== value) {
+            return val;
+         }
+      })[0];
+   },
     adminControl: function (user_role) {
         if (user_role === 'admin') {
             $(".only_admin").removeClass('hide');
