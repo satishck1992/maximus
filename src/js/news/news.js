@@ -1,40 +1,22 @@
 $('document').ready(function () {
    'use strict';
 
-   getUser()
+   Utils.getUser()
       .then(function (user_data) {
          Utils.runPageStartup(user_data.user_role);
          return showNews(user_data.user_name, user_data.user_role);
       })
       .then(function (user_data) {
          var table = createDataTable();
-         $('select').change(function (ev) {
-            table.destroy();
-            showNews(user_data.user_name, user_data.user_role)
-               .then(function () {
-                  table = createDataTable();
-               });
-         });
+         $('select').change({ table: table, user_data: user_data }, onSelectEvent);
          $('.news-table tbody').on("click", "td.actions a.delete_icon", deleteNewsEvt);
          $('.news-table tbody').on("click", "td.actions a.publish_icon", { user_role: user_data.user_role }, publishNewsEvt);
-         $('input#filter_search_headline').on('keyup click', function () {
-            $('.news-table table').DataTable().column(2).search(
-               $('input#filter_search_headline').val(), true, true
-            ).draw();
-         });
+         $('input#filter_search_headline').on('keyup click', searchTable);
       })
       .catch(function (err) {
-         Utils.showError(err); 
-         console.log(err);
-         redirectToPage(CONST.login_page);
+         Utils.redirectPage(Utils.ERROR_PAGE);
       });
 
-   function createDataTable() {
-      return $('.news-table table').DataTable({
-         paging: false,
-         "info": false,
-      });
-   }
 
    /**
     * Fn to display News in News page.
@@ -45,7 +27,7 @@ $('document').ready(function () {
    function showNews(user_name, user_role) {
       return new Promise(function (fulfill, reject) {
          var filters = getFilterDropdownValues();
-         NewsAPI.getNews(filters.sports_type, filters.news_status, user_name)
+         NewsAPI.fetchNews(user_name, filters.sports_type, filters.news_status)
             .then(function (news_list) {
                displayHTML(news_list, user_role);
                fulfill({ user_name: user_name, user_role: user_role });
@@ -54,6 +36,7 @@ $('document').ready(function () {
                reject(err);
             });
       });
+
       function getFilterDropdownValues() {
          return {
             sports_type: $("#filter-sportsType").val(),
@@ -62,9 +45,76 @@ $('document').ready(function () {
       }
    }
 
-   /**
-          * Fn to make html for a single row.
-          */
+   function createDataTable() {
+      return $('.news-table table').DataTable({
+         paging: false,
+         "info": false,
+      });
+   }
+
+   function onSelectEvent(e) {
+      var table = e.data.table;
+      table.destroy();
+      var user_data = e.data.user_data;
+      showNews(user_data.user_name, user_data.user_role)
+         .then(function () {
+            table = createDataTable();
+            e.data.table = table;
+         });
+   }
+
+   function searchTable() {
+      $('.news-table table').DataTable().column(2).search(
+         $('input#filter_search_headline').val(), true, true
+      ).draw();
+   }
+
+   function deleteNewsEvt(ev) {
+      ev.preventDefault();
+      var self = this;
+      Utils.askUser('Are you sure, you want to delete..', function (userAnswer) {
+         if (userAnswer === true) {
+            var newsRow = $(self).closest('tr');
+            var newsId = newsRow.data('id');
+            NewsAPI.deleteNews(newsId, false)
+               .then(function (in_carousel) {
+                  if (in_carousel === false) {
+                     newsRow.remove();
+                  } else {
+                     Utils.askUser('news exist in carousel? It wil be deleted from carousel as well..', function (userAnswer) {
+                        if (userAnswer === true) {
+                           NewsAPI.deleteNews(newsId, true)
+                              .then(function (success) {
+                                 newsRow.remove();
+                              })
+                              .catch(function (err) {
+                                 Utils.showError(err);
+                              });
+                        }
+                     });
+                  }
+               })
+               .catch(function (err) {
+                  Utils.showError(err);
+               });
+         }
+      });
+   }
+
+   function publishNewsEvt(ev) {
+      var user_role = ev.data.user_role,
+         newsRow = $(this).closest('tr'),
+         newsId = newsRow.data('id');
+
+      NewsAPI.publishNews(newsId)
+         .then(function (published_obj) {
+            var newsSrNo = Number(newsRow.find('td:first-child').html());
+            newsRow.data('status', 'Published');
+            newsRow.html(singleRow(newsSrNo, published_obj, user_role));
+         })
+         .catch(function (err) { showError(err); });
+   }
+
    function displayHTML(news_list, user_role) {
       var html = '';
       $.each(news_list, function (i, news) {
@@ -94,9 +144,6 @@ $('document').ready(function () {
       return html;
    }
 
-   /**
-    * Function to create Actions button HTML
-    */
    function getActionsOfNews(news, user_role) {
       var html = '';
       var preview_btn = '<a href="/news_form.html?type=preview&news_id=' + news.article_id + '" class="preview_icon"><i class="material-icons">visibility</i></a>';
@@ -113,54 +160,5 @@ $('document').ready(function () {
          if (user_role === 'admin') { html += delete_btn; }
       }
       return html;
-   }
-
-
-
-   /**
-    * Event when delete action item is clicked.
-    */
-   function deleteNewsEvt(ev) {
-      ev.preventDefault();
-      var newsRow = $(this).closest('tr');
-      Utils.askUser('Are you sure, you want to delete..', function (userAnswer) {
-         if (userAnswer === true) {
-            var newsId = newsRow.data('id');
-            deleteNews(newsId, false)
-               .then(function (in_carousel) {
-                  if (in_carousel === false) {
-                     newsRow.remove();
-                  } else {
-                     askUser('news exist in carousel? It wil be deleted from carousel as well..', function (userAnswer) {
-                        if (userAnswer === true) {
-                           deleteNews(newsId, true)
-                              .then(function (success) {
-                                 newsRow.remove();
-                              })
-                        }
-                     });
-                  }
-               })
-               .catch(function (err) {
-                  showError(err);
-               });
-         }
-      });
-   }
-
-   /**
-    * Event when publish new item is clicked.
-    */
-   function publishNewsEvt(ev) {
-      var user_role = ev.data.user_role;
-      var newsRow = $(this).closest('tr');
-      var newsId = newsRow.data('id');
-      publishNews(newsId)
-         .then(function (updated_news_obj) {
-            var newsSrNo = Number(newsRow.find('td:first-child').html());
-            newsRow.html(singleRow(newsSrNo, updated_news_obj, user_role));
-            newsRow.data('status', 'Published');
-         })
-         .catch(function (err) { showError(err); });
    }
 });

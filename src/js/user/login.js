@@ -6,18 +6,16 @@ $('document').ready(function () {
          Utils.redirectPage(Utils.SUCCESS_PAGE);
       })
       .catch(function () {
-         bindFormSubmitEvent();
+         $('#login-form').submit(loginUser);
       });
 
 
-   function bindFormSubmitEvent() {
-      $("#login-form").submit(function (ev) {
-         ev.preventDefault();
-         var user_id = $("#user_name").val();
-         var password = $("#password").val();
+   function loginUser(ev) {
+      ev.preventDefault();
+      var user_id = $("#user_name").val();
+      var password = $("#password").val();
 
-         authenticateUser(user_id, password);
-      });
+      authenticateUser(user_id, password);
    }
 
    function authenticateUser(user_id, password) {

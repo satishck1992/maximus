@@ -93,3 +93,19 @@ main#news.carousel .content {
       }
    }
 }
+
+.carousel-wrapper {
+         background: #fff;
+         padding: 12px;
+      }
+      #carousel-control {
+         display: flex;
+         margin-bottom: 12px;
+         .box {
+            flex: 1;
+            background: #e3e3e3;
+            margin-left: 6px;
+            margin-right: 6px;
+            height: 250px;
+         }
+      }

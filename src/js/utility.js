@@ -113,7 +113,7 @@ var Utils = {
     * @param msg {string} Msg to be asked
     * @return userAnswer {boolean} true or false based on user response.
     */
-   askUser: function (msg) {
+   askUser: function (msg, response) {
       var userAnswer = confirm(msg);
       response(userAnswer);
    },

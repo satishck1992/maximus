@@ -16,16 +16,20 @@ body {
 
 
 @import 'sidebar';
-main {
-   // padding-left: 240px;
-   
+main.dashboard {
+   height: 100%;
    overflow-y: auto;
-   
+   padding-left: 240px;
 }
+
+@import 'news/news';
+
+
+
+
 @import 'chat';
 
 
-@import 'news';
 
 main#add-user {
    display: flex;

@@ -41,7 +41,7 @@ var NewsAPI = {
             method: 'GET',
             success: function (response) {
                if (response.status === 200) {
-                  fulfill(response.articles);
+                  fulfill(JSON.parse(response.articles));
                }
                reject(response.info);
             },

@@ -28,6 +28,9 @@
          text-transform: uppercase;
          color: $brand-color;
          text-align: center;
+         &:hover {
+            background-color: transparent;
+         }
       }
    }
 }
