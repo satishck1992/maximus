@@ -1,0 +1,50 @@
+*::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.08);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,.2);
+}
+*::-webkit-scrollbar {
+  width: 6px!important;
+  height: 6px!important;
+}
+
+.btn, .btn-large {
+   background-color: $lighter-brand-color;
+}
+
+.btn:hover, .btn-large:hover {
+   background-color: $brand-color;
+}
+
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+   box-shadow: none;
+   border-bottom: 1px solid $lighter-brand-color;
+}
+
+input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
+   color: $brand-color;
+}
+
+input:disabled:not([type]), input[readonly="readonly"]:not([type]), input[type="text"]:disabled, input[type="text"][readonly="readonly"], input[type="password"]:disabled, input[type="password"][readonly="readonly"], input[type="email"]:disabled, input[type="email"][readonly="readonly"], input[type="url"]:disabled, input[type="url"][readonly="readonly"], input[type="time"]:disabled, input[type="time"][readonly="readonly"], input[type="date"]:disabled, input[type="date"][readonly="readonly"], input[type="datetime"]:disabled, input[type="datetime"][readonly="readonly"], input[type="datetime-local"]:disabled, input[type="datetime-local"][readonly="readonly"], input[type="tel"]:disabled, input[type="tel"][readonly="readonly"], input[type="number"]:disabled, input[type="number"][readonly="readonly"], input[type="search"]:disabled, input[type="search"][readonly="readonly"], textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"] {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: $lighter-brand-color;
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+    background: #3e78b2;
+}
+
+::selection {
+    color: #fff;
+    background: #3e78b2;
+}
+
+.toast.error {
+   background-color: #F71735;
+   font-weight: bold;
+}

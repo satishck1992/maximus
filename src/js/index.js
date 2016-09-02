@@ -1,11 +1,11 @@
 (function (window) {
    'use strict';
 
-   getUser()
-      .then(function (success) {
-         redirectToPage(CONST.success_page);
+   Utils.getUser()
+      .then(function () {
+         Utils.redirectPage(Utils.SUCCESS_PAGE);
       })
-      .catch(function (fail) {
-         redirectToPage(CONST.login_page);
+      .catch(function () {
+         Utils.redirectPage(Utils.ERROR_PAGE);
       });
 })(window);

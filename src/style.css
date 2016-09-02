@@ -15,48 +15,62 @@ body {
   width: 6px !important;
   height: 6px !important; }
 
-.toast.error {
-  background-color: #F71735; }
+.btn, .btn-large {
+  background-color: #3E78B2; }
 
-main#index {
+.btn:hover, .btn-large:hover {
+  background-color: #004d99; }
+
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+  box-shadow: none;
+  border-bottom: 1px solid #3E78B2; }
+
+input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
+  color: #004d99; }
+
+input:disabled:not([type]), input[readonly="readonly"]:not([type]), input[type="text"]:disabled, input[type="text"][readonly="readonly"], input[type="password"]:disabled, input[type="password"][readonly="readonly"], input[type="email"]:disabled, input[type="email"][readonly="readonly"], input[type="url"]:disabled, input[type="url"][readonly="readonly"], input[type="time"]:disabled, input[type="time"][readonly="readonly"], input[type="date"]:disabled, input[type="date"][readonly="readonly"], input[type="datetime"]:disabled, input[type="datetime"][readonly="readonly"], input[type="datetime-local"]:disabled, input[type="datetime-local"][readonly="readonly"], input[type="tel"]:disabled, input[type="tel"][readonly="readonly"], input[type="number"]:disabled, input[type="number"][readonly="readonly"], input[type="search"]:disabled, input[type="search"][readonly="readonly"], textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"] {
+  color: rgba(0, 0, 0, 0.87); }
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #3E78B2; }
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: #fff;
+  background: #3e78b2; }
+
+::selection {
+  color: #fff;
+  background: #3e78b2; }
+
+.toast.error {
+  background-color: #F71735;
+  font-weight: bold; }
+
+main.login {
   height: 100%;
-  padding-bottom: 150px;
   display: flex;
-  align-items: center; }
-  main#index .container {
-    text-align: center; }
-    main#index .container #logo {
-      display: block;
-      margin-bottom: 36px; }
-      main#index .container #logo img {
-        height: 120px; }
-    main#index .container .welcome-msg {
-      color: #666;
-      font-size: 1.5rem;
-      line-height: 36px; }
-    main#index .container .login-card {
-      margin: 24px auto;
-      max-width: 600px; }
-      main#index .container .login-card .card-action {
-        text-align: right; }
-      main#index .container .login-card form i.active {
-        color: #004d99; }
-      main#index .container .login-card form label {
-        text-align: left; }
-      main#index .container .login-card form input[type=text]:focus:not([readonly]) + label,
-      main#index .container .login-card form input[type=password]:focus:not([readonly]) + label {
-        color: #004d99; }
-      main#index .container .login-card form input[type=text]:focus:not([readonly]),
-      main#index .container .login-card form input[type=password]:focus:not([readonly]) {
-        box-shadow: 0 1px 0 0 #004d99;
-        border-bottom: 1px solid #004d99; }
-      main#index .container .login-card form span.result {
-        font-size: 0.9rem;
-        font-weight: bold; }
-        main#index .container .login-card form span.result.error {
-          color: #F05D5E; }
-      main#index .container .login-card form .btn {
-        background-color: #004d99; }
+  padding-bottom: 150px;
+  align-items: center;
+  text-align: center; }
+  main.login #logo {
+    display: block;
+    margin-bottom: 36px; }
+    main.login #logo img {
+      height: 120px; }
+  main.login .welcome-msg {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: 30px; }
+  main.login .login-card {
+    margin: 24px auto;
+    max-width: 600px;
+    text-align: left; }
+    main.login .login-card form i.active {
+      color: #004d99; }
+    main.login .login-card .card-action {
+      text-align: right; }
 
 .side-nav.fixed {
   width: 240px; }
@@ -82,7 +96,6 @@ main#index {
       text-align: center; }
 
 main {
-  padding-left: 240px;
   overflow-y: auto; }
 
 main#chat {
@@ -448,28 +461,6 @@ main#add-user {
   height: 100%; }
   main#add-user .card {
     width: 600px; }
-
-input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
-  box-shadow: none;
-  border-color: #9e9e9e; }
-
-input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #004d99; }
-
-input:disabled:not([type]), input[readonly="readonly"]:not([type]), input[type="text"]:disabled, input[type="text"][readonly="readonly"], input[type="password"]:disabled, input[type="password"][readonly="readonly"], input[type="email"]:disabled, input[type="email"][readonly="readonly"], input[type="url"]:disabled, input[type="url"][readonly="readonly"], input[type="time"]:disabled, input[type="time"][readonly="readonly"], input[type="date"]:disabled, input[type="date"][readonly="readonly"], input[type="datetime"]:disabled, input[type="datetime"][readonly="readonly"], input[type="datetime-local"]:disabled, input[type="datetime-local"][readonly="readonly"], input[type="tel"]:disabled, input[type="tel"][readonly="readonly"], input[type="number"]:disabled, input[type="number"][readonly="readonly"], input[type="search"]:disabled, input[type="search"][readonly="readonly"], textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"] {
-  color: rgba(0, 0, 0, 0.87); }
-
-.dropdown-content li > a, .dropdown-content li > span {
-  color: #004d99; }
-
-::-moz-selection {
-  /* Code for Firefox */
-  color: #fff;
-  background: #3e78b2; }
-
-::selection {
-  color: #fff;
-  background: #3e78b2; }
 
 main#news.carousel .content .carousel-wrapper {
   background-color: #394242;

@@ -1,31 +1,33 @@
 $('document').ready(function () {
    'use strict';
 
-   getUser()
-      .then(function (success) {
-         redirectToPage(CONST.success_page);
+   Utils.getUser()
+      .then(function () {
+         Utils.redirectPage(Utils.SUCCESS_PAGE);
       })
-      .catch(function (fail) {
-         // if no user is present, then only login form make sense.
-         bindLoginEvt()
+      .catch(function () {
+         bindFormSubmitEvent();
       });
 
 
-   function bindLoginEvt() {
+   function bindFormSubmitEvent() {
       $("#login-form").submit(function (ev) {
          ev.preventDefault();
          var user_id = $("#user_name").val();
          var password = $("#password").val();
 
-         authenticateUser(user_id, password)
-            .then(function (user_data) {
-               setUser(user_data.user_name, user_data.user_role);
-               redirectToPage(CONST.success_page);
-            })
-            .catch(function (err) {
-               showError(err);
-            });
+         authenticateUser(user_id, password);
       });
    }
 
+   function authenticateUser(user_id, password) {
+      UserAPIS.loginAPI(user_id, password)
+         .then(function (user_role) {
+            Utils.setUser(user_id, user_role);
+            Utils.redirectPage(Utils.SUCCESS_PAGE);
+         })
+         .catch(function (err) {
+            Utils.showError(err);
+         });
+   }
 });

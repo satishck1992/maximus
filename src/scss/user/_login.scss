@@ -1,0 +1,34 @@
+main.login {
+   height: 100%;
+   display: flex;
+   padding-bottom: 150px;
+   align-items: center;
+   text-align: center;
+   #logo {
+      display: block;
+      margin-bottom: 36px;
+      img {
+         height: 120px;
+      }
+   }
+   .welcome-msg {
+      color: rgba(0, 0, 0, 0.87);
+      font-size: 1.2rem;
+      font-weight: bold;
+      line-height: 30px;
+   }
+   .login-card {
+      margin: 24px auto;
+      max-width: 600px;
+      text-align: left;
+      form {
+         i.active {
+            color: $brand-color;
+         }
+      }
+      .card-action {
+         text-align: right;
+      }
+   }
+
+}

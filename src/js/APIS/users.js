@@ -23,7 +23,7 @@ var UserAPIS = {
                reject(response.info);
             },
             error: function (err) {
-               reject(err);
+               reject(err.responseJSON.info);
             }
          });
       });
