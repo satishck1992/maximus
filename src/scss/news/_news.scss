@@ -78,6 +78,155 @@ main#news {
          }
       }
    }
+
+   .carousel.content {
+      .carousel-wrapper {
+         background-color: #394242;
+         min-height: 200px;
+         .row {
+            margin-bottom: 0;
+            .info-col {
+               color: #fff;
+               text-align: center;
+               span {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 160px;
+                  width: 100%;
+                  padding: 24px;
+                  background-color: rgba(255, 255, 255, 0.87);
+                  color: rgba(0, 0, 0, 0.54);
+                  font-weight: bold;
+               }
+            }
+            .carousel_list_col {
+               display: flex;
+               flex-wrap: wrap;
+               .carousel-box {
+                  width: 18%;
+                  margin-left: 1%;
+                  margin-right: 1%;
+                  margin-bottom: 12px;
+                  height: 160px;
+                  .image {
+                     height: 150px;
+                     position: relative;
+                     border: 1px solid #e3e3e3;
+                     .banner {
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 45px 45px 0 0;
+                        border-color: #ec5d2f transparent transparent transparent;
+                        .number {
+                           position: absolute;
+                           top: 6px;
+                           left: 6px;
+                           color: #fff;
+                        }
+                        i {
+                           position: absolute;
+                           top: 0;
+                           right: 0;
+                           color: #fff;
+                           cursor: pointer;
+                        }
+                     }
+                  }
+                  .carousel-headline {
+                     color: #fff;
+                     font-weight: bold;
+                     white-space: nowrap;
+                     text-overflow: ellipsis;
+                     overflow: hidden;
+                  }
+               }
+            }
+         }
+      }
+      .save-carousel {
+         margin-top: 12px;
+         margin-bottom: 12px;
+         background: #004d99;
+         font-weight: bold;
+      }
+      table {
+         .actions {
+            a {
+               margin: 0;
+               // font-size: 0.8rem;
+               padding-left: 0;
+               padding-right: 0;
+               text-transform: uppercase;
+               font-weight: bold;
+               &.add-carousel-btn {
+                  color: #004d99;
+               }
+               &.remove-carousel-btn {
+                  color: #ec5d2f;
+               }
+               &:hover {
+                  background-color: transparent;
+               }
+            }
+         }
+      }
+   }
+
+   #news-form {
+      // overflow-y: scroll;
+      .semi-card {
+         padding: 12px;
+         background-color: #fff;
+         box-shadow: 0 -1px 0 #e5e5e5, 0 0 1px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+         display: -webkit-box;
+         display: -webkit-flex;
+         display: -ms-flexbox;
+         flex-direction: column;
+         .input-field {
+            width: 100%;
+         }
+      }
+      h4 {
+         // color: #004d99;
+         font-weight: bold;
+      }
+      form {
+         .caret {
+            z-index: 4;
+         }
+         h5  {
+            color: #004d99;
+            // font-weight: bold;
+         }
+         .file-field .btn {
+            background-color: #ededed;
+            color: rgba(0, 0, 0, 0.87);
+            // box-shadow: none;
+            &:hover {
+               background-color: #ededed;
+            }
+         }
+         .file-field .file-path-wrapper {
+            padding-right: 20px;
+            padding-left: 0;
+         }
+         input.select-dropdown {
+            border-radius: 3px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.18),0 1px 2px 0 rgba(0,0,0,0.15);
+            padding: 0px 12px;
+            background-color: rgb(237, 237, 237);
+            border-color: rgb(177, 177, 177);
+            border: 0;
+            text-transform: uppercase;
+         }
+         .submit-btn,
+         .draft-btn {
+            background-color: #004d99;
+         }
+      }
+   }
 }
 
 #DataTables_Table_0_filter {

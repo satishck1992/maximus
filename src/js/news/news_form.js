@@ -1,26 +1,26 @@
 $('document').ready(function () {
    'use strict';
 
-   getUser()
+   Utils.getUser()
       .then(function (user_data) {
          var user_name = user_data.user_name;
          var user_role = user_data.user_role;
 
          Utils.runPageStartup(user_data.user_role);
 
-         var type = getQueryVariable('type');
+         var type = Utils.getUrlQueryVariables('type');
          if (type === 'add') {
             initCreateForm(user_name);
          } else if (type === 'edit') {
-            var id = getQueryVariable('news_id');
+            var id = Utils.getUrlQueryVariables('news_id');
             initEditForm(id);
          } else {
-            var id = getQueryVariable('news_id');
+            var id = Utils.getUrlQueryVariables('news_id');
             initPreview(id);
          }
       })
       .catch(function (err) {
-         showError(err);
+         Utils.showError(err);
       });
 
    function initCreateForm(user_name) {
@@ -40,12 +40,14 @@ $('document').ready(function () {
    function saveNews(ev, state) {
       ev.preventDefault();
       Utils.showLoading();
-      createNews()
+      var form = $('#news-form')[0];
+      var formData = new FormData(form);
+      NewsAPI.createNews(formData)
          .then(function (success) {
             Utils.hideLoading();
-            askUser('Would you like to add more news', function (userAnswer) {
+            Utils.askUser('Would you like to add more news', function (userAnswer) {
                if (!userAnswer) {
-                  redirectToPage("news.html");
+                  Utils.redirectPage("news.html");
                } else {
                   $('form')[0].reset();
                }
@@ -53,7 +55,7 @@ $('document').ready(function () {
          })
          .catch(function (err) {
             Utils.hideLoading();
-            showError(err);
+            Utils.showError(err);
          });
    }
 
@@ -61,7 +63,7 @@ $('document').ready(function () {
       $('.page-title').html('Edit Form');
       $('.submit-btn').html('Update News');
       $('.draft-btn').hide();
-      getSingleNews(id)
+      NewsAPI.fetchSingleNews(id)
          .then(function (news_obj) {
             setFormValues(news_obj);
             Materialize.updateTextFields();
@@ -90,7 +92,7 @@ $('document').ready(function () {
       NewsAPI.editNews(id)
          .then(function (success) {
             Utils.hideLoading();
-            redirectToPage("news.html");
+            Utils.redirectPage("news.html");
          })
          .catch(function (err) {
             Utils.hideLoading();
@@ -160,7 +162,7 @@ $('document').ready(function () {
 
    function initPreview(id) {
       $('.page-title').html('Preview Form');
-      getSingleNews(id)
+      NewsAPI.fetchSingleNews(id)
          .then(function (news_obj) {
             setFormValues(news_obj);
             Materialize.updateTextFields();
@@ -173,14 +175,14 @@ $('document').ready(function () {
             $(".ice-breaker-img-input .file-field").hide();
             $('.edit-btn').click(function (e) {
                e.preventDefault();
-               window.location.href = "/news_form.html?type=edit&news_id=" + id;
+               Utils.redirectPage("/news_form.html?type=edit&news_id=" + id);
             });
 
             $('button').hide();
             $('button.edit-btn').removeClass('hide').show();
          })
          .catch(function (err) {
-            showError(err.statusText);
+            Utils.showError(err.statusText);
          });
    }
 });

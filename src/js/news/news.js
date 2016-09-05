@@ -1,6 +1,7 @@
 $('document').ready(function () {
    'use strict';
 
+   Utils.showLoading();
    Utils.getUser()
       .then(function (user_data) {
          Utils.runPageStartup(user_data.user_role);
@@ -12,8 +13,10 @@ $('document').ready(function () {
          $('.news-table tbody').on("click", "td.actions a.delete_icon", deleteNewsEvt);
          $('.news-table tbody').on("click", "td.actions a.publish_icon", { user_role: user_data.user_role }, publishNewsEvt);
          $('input#filter_search_headline').on('keyup click', searchTable);
+         Utils.hideLoading();
       })
       .catch(function (err) {
+         Utils.hideLoading();
          Utils.redirectPage(Utils.ERROR_PAGE);
       });
 

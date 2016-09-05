@@ -5,8 +5,6 @@
    <meta charset="UTF-8">
    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <title>News - Project Maximus - SportsUnity Control Station</title>
-   <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
-   <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
    <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
    <link rel="stylesheet" href="style.css">
 </head>
@@ -16,11 +14,11 @@
    <header>
       <ul class="side-nav fixed">
          <li class="logo">
-            <a href="chat.html" class="brand-logo">
+            <a href="index.html" class="brand-logo">
                Project Maximus
             </a>
          </li>
-         <li>
+         <li class="hide only_admin">
             <a href="chat.html">
                <i class="material-icons left">chat</i> Chat Control
             </a>
@@ -30,132 +28,134 @@
                <i class="material-icons left">inbox</i> News Control
             </a>
          </li>
-         <li>
+         <li class="hide">
             <a href="stats.html">
                <i class="material-icons left">pie_chart</i> Stats Control
             </a>
          </li>
-         <li>
+         <li class="hide only_admin">
             <a href="add_user.html" class="hide only_admin">
                <i class="material-icons">face</i>Add user
             </a>
          </li>
          <li>
-            <a href="#" onclick="logOutUser(); return false;" class="logout-btn">
+            <a href="#" onclick="Utils.clearUser(); return false;">
                <i class="material-icons">remove_circle</i>Logout
             </a>
          </li>
       </ul>
    </header>
 
-   <main id="news">
+   <main id="news" class="dashboard">
       <ul class="secondary-menu">
          <li><a href="news.html">All News</a></li>
          <li><a href="/news_form.html?type=add" class="active">News Form</a></li>
-         <li class="hide only_admin"><a href="carousel_control.html">Carousel Control</a></li>
+         <li class="hide only_admin"><a href="carousel.html">Carousel Control</a></li>
       </ul>
-      <div class="container">
-         <div class="row">
-            <h4 class="page-title">Add News Form :</h4>
-            <form id="news-form" class="col s12" enctype="multipart/form-data">
-               <div class="row">
-                  <div class="input-field col s2">
-                     <select id="article_sport_type" name="article_sport_type" required>
+      <div class="content">
+         <div class="container">
+            <div class="row">
+               <h4 class="page-title">Add News Form :</h4>
+               <form id="news-form" class="col s12" enctype="multipart/form-data">
+                  <div class="row">
+                     <div class="input-field col s2">
+                        <select id="article_sport_type" name="article_sport_type" required>
                         <option value="" disabled>Choose a Sports</option>
                         <option value="c">Cricket</option>
                         <option value="f">Football</option>
                      </select>
-                  </div>
-               </div>
-               <div class="row">
-                  <h5>Upload Header Image</h5>
-                  <div class="semi-card article-img-input col s8">
-                     <div class="row">
-                        <div class="col s12">
-                           <img id="article_image_file_preview" src="" class="responsive-img hide">
-                        </div>
-                     </div>
-                     <div class="file-field input-field">
-                        <div class="btn waves-effect right">
-                           <span>Upload Header Image</span>
-                           <input type="file" id="article_image" name="article_image" required>
-                        </div>
-                        <div class="file-path-wrapper">
-                           <input type="text" class="file-path validate" placeholder="Upload news headline Image">
-                        </div>
                      </div>
                   </div>
-               </div>
-               <div class="row">
-                  <h5>Heading</h5>
-                  <div class="semi-card col s8">
-                     <div class="input-field">
-                        <input type="text" id="article_headline" name="article_headline" length="80" maxlength="80" required>
-                        <label for="article_headline">Set a Headline</label>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <h5>Summary</h5>
-                  <div class="semi-card col s8">
-                     <div class="input-field">
-                        <textarea id="article_content" class="materialize-textarea" name="article_content" required></textarea>
-                        <label for="article_content">Summary</label>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <h5>Ice Breaker Image</h5>
-                  <div class="semi-card ice-breaker-img-input col s8">
-                     <div class="row">
-                        <div class="col s12">
-                           <img id="article_ice_breaker_file_preview" src="" class="responsive-img hide">
+                  <div class="row">
+                     <h5>Upload Header Image</h5>
+                     <div class="semi-card article-img-input col s8">
+                        <div class="row">
+                           <div class="col s12">
+                              <img id="article_image_file_preview" src="" class="responsive-img hide">
+                           </div>
                         </div>
-                     </div>
-                     <div class="file-field input-field">
-                        <div class="btn waves-effect right">
-                           <span>IceBreaker Image</span>
-                           <input type="file" id="article_ice_breaker_image" name="article_ice_breaker_image" required>
-                        </div>
-                        <div class="file-path-wrapper">
-                           <input type="text" class="file-path validate" placeholder="Upload Ice Breaker Image">
+                        <div class="file-field input-field">
+                           <div class="btn waves-effect right">
+                              <span>Upload Header Image</span>
+                              <input type="file" id="article_image" name="article_image" required>
+                           </div>
+                           <div class="file-path-wrapper">
+                              <input type="text" class="file-path validate" placeholder="Upload news headline Image">
+                           </div>
                         </div>
                      </div>
                   </div>
-               </div>
-               <div class="row">
-                  <h5>Enter Poll Question</h5>
-                  <div class="semi-card col s8">
-                     <div class="input-field">
-                        <input type="text" id="article_poll_question" name="article_poll_question" required>
-                        <label for="article_poll_question">Enter Poll Question</label>
+                  <div class="row">
+                     <h5>Heading</h5>
+                     <div class="semi-card col s8">
+                        <div class="input-field">
+                           <input type="text" id="article_headline" name="article_headline" length="80" maxlength="80" required>
+                           <label for="article_headline">Set a Headline</label>
+                        </div>
                      </div>
                   </div>
-               </div>
-               <div class="row">
-                  <h5>Enter Notification Content</h5>
-                  <div class="semi-card col s8">
-                     <div class="input-field">
-                        <input type="text" id="article_notification_content" name="article_notification_content" required>
-                        <label for="article_notification_content">Enter Notification Content</label>
+                  <div class="row">
+                     <h5>Summary</h5>
+                     <div class="semi-card col s8">
+                        <div class="input-field">
+                           <textarea id="article_content" class="materialize-textarea" name="article_content" required></textarea>
+                           <label for="article_content">Summary</label>
+                        </div>
                      </div>
                   </div>
-               </div>
-               <div class="row">
-                  <input type="hidden" id="article_state" name="article_state" value="UnPublished">
-                  <input type="hidden" id="username" name="username" value="">
-               </div>
-               <div class="row">
-                  <div class="input-field col s12">
-                     <button class="btn waves-effect waves-light submit-btn" type="submit" name="action">
+                  <div class="row">
+                     <h5>Ice Breaker Image</h5>
+                     <div class="semi-card ice-breaker-img-input col s8">
+                        <div class="row">
+                           <div class="col s12">
+                              <img id="article_ice_breaker_file_preview" src="" class="responsive-img hide">
+                           </div>
+                        </div>
+                        <div class="file-field input-field">
+                           <div class="btn waves-effect right">
+                              <span>IceBreaker Image</span>
+                              <input type="file" id="article_ice_breaker_image" name="article_ice_breaker_image" required>
+                           </div>
+                           <div class="file-path-wrapper">
+                              <input type="text" class="file-path validate" placeholder="Upload Ice Breaker Image">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <h5>Enter Poll Question</h5>
+                     <div class="semi-card col s8">
+                        <div class="input-field">
+                           <input type="text" id="article_poll_question" name="article_poll_question" required>
+                           <label for="article_poll_question">Enter Poll Question</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <h5>Enter Notification Content</h5>
+                     <div class="semi-card col s8">
+                        <div class="input-field">
+                           <input type="text" id="article_notification_content" name="article_notification_content" required>
+                           <label for="article_notification_content">Enter Notification Content</label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <input type="hidden" id="article_state" name="article_state" value="UnPublished">
+                     <input type="hidden" id="username" name="username" value="">
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light submit-btn" type="submit" name="action">
                         Create News
                      </button>
-                     <button class="btn waves-effect waves-light draft-btn">
+                        <button class="btn waves-effect waves-light draft-btn">
                         Save Draft
                      </button>
+                     </div>
                   </div>
-               </div>
-            </form>
+               </form>
+            </div>
          </div>
       </div>
    </main>
@@ -179,10 +179,8 @@
    <script src="../node_modules/jquery/dist/jquery.js"></script>
    <script src="../node_modules/materialize-css/dist/js/materialize.js"></script>
 
-   <script src="js/_utils/CONST.js"></script>
-   <script src="js/_utils/utility.js"></script>
-   <script src="js/_utils/user.js"></script>
-   <script src="js/_utils/news.js"></script>
+   <script src="js/utility.js"></script>
+   <script src="js/APIS/news.js"></script>
 
    <script src="js/news/news_form.js"></script>
 </body>
